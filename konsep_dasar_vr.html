@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konsep Dasar VR</title>
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+
+    <script>
+      // Back navigation
+      AFRAME.registerComponent('close-tab', {
+        init: function () {
+          this.el.addEventListener('click', () => {
+            this.el.setAttribute('animation__click', 'property: scale; to: 0.95 0.95 0.95; dur: 150');
+            setTimeout(() => {
+              window.close();
+              setTimeout(() => { window.location.href = 'presentasi.html'; }, 150);
+            }, 150);
+          });
+        }
+      });
+
+      // Ambient floating particles
+      AFRAME.registerComponent('floating-particles', {
+        init: function () {
+          const colors = ['#38BDF8', '#A78BFA', '#34D399', '#FBBF24', '#F472B6'];
+          for (let i = 0; i < 55; i++) {
+            let sphere = document.createElement('a-sphere');
+            let x = (Math.random() - 0.5) * 35;
+            let y = Math.random() * 9 + 0.5;
+            let z = (Math.random() - 0.5) * 20 - 3;
+            sphere.setAttribute('position', `${x} ${y} ${z}`);
+            sphere.setAttribute('radius', Math.random() * 0.03 + 0.01);
+            let color = colors[Math.floor(Math.random() * colors.length)];
+            sphere.setAttribute('material', `color: ${color}; transparent: true; opacity: 0.35; shader: flat`);
+            let dur = Math.random() * 4000 + 3000;
+            let toY = y + (Math.random() * 1.5 + 0.5);
+            sphere.setAttribute('animation', `property: position; to: ${x} ${toY} ${z}; dur: ${dur}; dir: alternate; loop: true; easing: easeInOutSine`);
+            this.el.appendChild(sphere);
+          }
+        }
+      });
+
+      // Panel 3 — Sensory Feedback: sphere pulses + changes color when gazed at
+      AFRAME.registerComponent('pulse-react', {
+        init: function () {
+          var el = this.el;
+          var pulsing = false;
+          var colors = ['#FF6B6B', '#FBBF24', '#34D399', '#A78BFA', '#F472B6', '#38BDF8'];
+
+          el.addEventListener('mouseenter', function () {
+            if (pulsing) return;
+            pulsing = true;
+
+            var newColor = colors[Math.floor(Math.random() * colors.length)];
+            el.setAttribute('material', 'color', newColor);
+
+            // Must remove first, then re-add — otherwise A-Frame ignores repeated sets
+            el.removeAttribute('animation__pulse');
+            el.setAttribute('scale', '1 1 1');
+            setTimeout(function () {
+              el.setAttribute('animation__pulse', {
+                property: 'scale',
+                from: '1 1 1', to: '1.4 1.4 1.4',
+                dur: 350, dir: 'alternate', loop: 4, easing: 'easeOutSine'
+              });
+            }, 20);
+
+            var label = el.querySelector('.pulse-label');
+            if (label) label.setAttribute('visible', 'true');
+
+            setTimeout(function () {
+              el.removeAttribute('animation__pulse');
+              el.setAttribute('scale', '1 1 1');
+              el.setAttribute('material', 'color', '#38BDF8');
+              if (label) label.setAttribute('visible', 'false');
+              pulsing = false;
+            }, 1800);
+          });
+        }
+      });
+
+      // Panel 4 — Interactivity: cube spins fast when gazed at (tick-based, no animation conflicts)
+      AFRAME.registerComponent('gaze-spin', {
+        init: function () {
+          var el = this.el;
+          this.speed = 0.3; // degrees per frame (idle)
+
+          el.addEventListener('mouseenter', () => {
+            this.speed = 4.0; // fast on gaze
+            var label = el.parentNode.querySelector('.spin-label');
+            if (label) label.setAttribute('visible', 'true');
+          });
+          el.addEventListener('mouseleave', () => {
+            this.speed = 0.3; // back to idle
+            var label = el.parentNode.querySelector('.spin-label');
+            if (label) label.setAttribute('visible', 'false');
+          });
+        },
+        tick: function (time, delta) {
+          var rot = this.el.getAttribute('rotation');
+          var s = this.speed * (delta / 16);
+          this.el.setAttribute('rotation', {
+            x: rot.x + s,
+            y: rot.y + s * 2,
+            z: rot.z + s * 0.5
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene id="main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+
+      <!-- Camera: look + WASD walk -->
+      <a-entity id="main-camera" camera look-controls wasd-controls="acceleration: 15" position="0 1.6 0">
+        <a-entity id="camera-cursor" cursor="fuse: true; fuseTimeout: 2000"
+                  position="0 0 -1"
+                  geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.018"
+                  material="color: #38BDF8; shader: flat; opacity: 0.8"
+                  raycaster="objects: .clickable"
+                  animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 2000; from: 1 1 1; to: 0.1 0.1 0.1"
+                  animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeOutCubic; dur: 300; to: 1 1 1"
+                  animation__click="property: scale; startEvents: click; easing: easeOutCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1">
+        </a-entity>
+      </a-entity>
+
+      <!-- Environment -->
+      <a-sky id="env-sky" color="#050818"></a-sky>
+      <a-plane id="env-ground" color="#02030a" rotation="-90 0 0" width="100" height="100" material="shader: flat"></a-plane>
+      <a-plane id="env-grid" position="0 0.01 0" rotation="-90 0 0" width="100" height="100"
+               material="color: #1e293b; wireframe: true; transparent: true; opacity: 0.2; shader: flat"></a-plane>
+
+      <!-- Ambient particles -->
+      <a-entity id="particles-system" floating-particles></a-entity>
+
+      <!-- Large background rings -->
+      <a-entity id="bg-rings" position="0 3 -8"
+                animation="property: rotation; to: 360 360 0; loop: true; dur: 45000; easing: linear">
+        <a-torus id="bg-ring-1" radius="7" radius-tubular="0.012"
+                 material="color: #0EA5E9; opacity: 0.12; transparent: true; shader: flat"></a-torus>
+        <a-torus id="bg-ring-2" radius="7.6" radius-tubular="0.008" rotation="90 0 0"
+                 material="color: #38BDF8; opacity: 0.08; transparent: true; shader: flat"
+                 animation="property: rotation; to: 90 360 0; loop: true; dur: 28000; easing: linear"></a-torus>
+      </a-entity>
+
+      <!-- Page title -->
+      <a-text id="page-title" value="KONSEP DASAR VR" font="kelsonsans" align="center"
+              position="0 4.6 -5" color="#FFFFFF" scale="2.3 2.3 2.3" letterSpacing="3"
+              animation="property: position; to: 0 4.8 -5; dur: 3200; dir: alternate; loop: true; easing: easeInOutSine">
+      </a-text>
+      <a-text id="page-subtitle" value="4 Elemen Penting dalam Teknologi VR — Putar kepala untuk menjelajahi" font="kelsonsans"
+              align="center" position="0 3.9 -5" color="#38BDF8" scale="0.82 0.82 0.82">
+      </a-text>
+
+      <!-- ==================== PANEL 1: Virtual World (Front-Left) ==================== -->
+      <!-- Color accent: #38BDF8 (sky blue) -->
+      <a-entity id="panel1-wrapper" position="-6.58514 2.2 -4.92557" rotation="0 -0.25095551426730056 0"
+                animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 600; easing: easeOutBack">
+        <a-plane id="panel1-bg" width="3.2" height="2.2" color="#060E28"
+                 material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
+        <a-plane id="panel1-border" width="3.24" height="2.24" color="#38BDF8" position="0 0 -0.008"
+                 material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
+        <!-- Badge number -->
+        <a-text id="panel1-num" value="01" font="kelsonsans" align="left" position="-1.45 0.8 0.02"
+                color="#38BDF8" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
+        <!-- Title -->
+        <a-text id="panel1-title" value="Virtual World" font="kelsonsans" align="left"
+                position="-0.75 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <!-- Divider -->
+        <a-box id="panel1-divider" position="0 0.42 0.02" width="2.9" height="0.006" depth="0.001"
+               color="#38BDF8" material="shader: flat; opacity: 0.5"></a-box>
+        <!-- Description -->
+        <a-text id="panel1-desc"
+                value="Lingkungan 3D yang dibentuk menggunakan komputer. Sebuah dunia yang sepenuhnya digital dan bisa kita jelajahi."
+                font="kelsonsans" align="left" position="-1.45 0.2 0.02" color="#CBD5E1"
+                scale="0.72 0.72 0.72" width="4.8"></a-text>
+
+        <!-- DEMO: Mini solar system = "a whole world inside a computer" -->
+        <a-entity id="panel1-demo" position="0 -0.72 0.35">
+          <a-sphere id="demo1-globe" radius="0.2" color="#0EA5E9"
+                    material="shader: flat; transparent: true; opacity: 0.75"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 8000; easing: linear">
+          </a-sphere>
+          <a-entity id="demo1-orbit1"
+                    animation="property: rotation; to: 0 360 0; loop: true; dur: 3500; easing: linear">
+            <a-sphere id="demo1-moon" position="0.42 0 0" radius="0.065" color="#F472B6"
+                      material="shader: flat"></a-sphere>
+          </a-entity>
+          <a-entity id="demo1-orbit2" rotation="65 0 0"
+                    animation="property: rotation; to: 425 0 0; loop: true; dur: 5500; easing: linear">
+            <a-box id="demo1-cube" position="0.42 0 0" width="0.055" height="0.055" depth="0.055"
+                   color="#34D399" material="shader: flat"></a-box>
+          </a-entity>
+          <a-entity id="demo1-orbit3" rotation="0 0 45"
+                    animation="property: rotation; to: 0 0 405; loop: true; dur: 7000; easing: linear">
+            <a-cone id="demo1-cone" position="0.42 0 0" radius-bottom="0.05" height="0.1"
+                    color="#FBBF24" material="shader: flat"></a-cone>
+          </a-entity>
+          <!-- Equator ring -->
+          <a-entity id="demo1-ring" geometry="primitive: torus; radius: 0.28; radiusTubular: 0.008"
+                    rotation="90 0 0" material="color: #38BDF8; shader: flat; transparent: true; opacity: 0.4">
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!-- ==================== PANEL 2: Immersion (Front-Right) ==================== -->
+      <!-- Color accent: #A78BFA (purple) -->
+      <a-entity id="panel2-wrapper" position="-2.47524 2.2 -5.17442" rotation="0 3.2595568964992534 0"
+                animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 700; easing: easeOutBack">
+        <a-plane id="panel2-bg" width="3.2" height="2.2" color="#0A060E"
+                 material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
+        <a-plane id="panel2-border" width="3.24" height="2.24" color="#A78BFA" position="0 0 -0.008"
+                 material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
+        <a-text id="panel2-num" value="02" font="kelsonsans" align="left" position="-1.45 0.8 0.02"
+                color="#A78BFA" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
+        <a-text id="panel2-title" value="Immersion" font="kelsonsans" align="left"
+                position="-0.75 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="panel2-divider" position="0 0.42 0.02" width="2.9" height="0.006" depth="0.001"
+               color="#A78BFA" material="shader: flat; opacity: 0.5"></a-box>
+        <a-text id="panel2-desc"
+                value="Rasa keberadaan diri di dunia lain. VR membuat kita benar-benar merasa berada di dalam lingkungan digital."
+                font="kelsonsans" align="left" position="-1.45 0.2 0.02" color="#CBD5E1"
+                scale="0.72 0.72 0.72" width="4.8"></a-text>
+
+        <!-- DEMO: Shrinking concentric rings = "pulled deeper in" -->
+        <a-entity id="panel2-demo" position="0 -0.72 0.35">
+          <a-entity id="demo2-ring1"
+                    geometry="primitive: torus; radius: 0.44; radiusTubular: 0.013"
+                    material="color: #A78BFA; shader: flat; transparent: true; opacity: 0.75"
+                    animation__shrink="property: scale; from: 1 1 1; to: 0.05 0.05 0.05; dur: 2200; loop: true; easing: easeInCubic"
+                    animation__rot="property: rotation; to: 0 360 0; loop: true; dur: 3000; easing: linear">
+          </a-entity>
+          <a-entity id="demo2-ring2"
+                    geometry="primitive: torus; radius: 0.34; radiusTubular: 0.01"
+                    material="color: #818CF8; shader: flat; transparent: true; opacity: 0.65"
+                    animation__shrink="property: scale; from: 1 1 1; to: 0.05 0.05 0.05; dur: 2200; delay: 550; loop: true; easing: easeInCubic"
+                    animation__rot="property: rotation; to: 360 0 0; loop: true; dur: 4200; easing: linear">
+          </a-entity>
+          <a-entity id="demo2-ring3"
+                    geometry="primitive: torus; radius: 0.22; radiusTubular: 0.009"
+                    material="color: #C4B5FD; shader: flat; transparent: true; opacity: 0.55"
+                    animation__shrink="property: scale; from: 1 1 1; to: 0.05 0.05 0.05; dur: 2200; delay: 1100; loop: true; easing: easeInCubic">
+          </a-entity>
+          <!-- Core: bright dot at the center of the vortex -->
+          <a-sphere id="demo2-core" radius="0.065" color="#FFFFFF"
+                    material="shader: flat; transparent: true; opacity: 0.9"
+                    animation="property: material.opacity; from: 0.3; to: 1; dur: 700; loop: true; dir: alternate">
+          </a-sphere>
+        </a-entity>
+      </a-entity>
+
+      <!-- ==================== PANEL 3: Sensory Feedback (Left) ==================== -->
+      <!-- Color accent: #34D399 (emerald) -->
+      <a-entity id="panel3-wrapper" position="1.73761 2.2 -5.41766" rotation="0 -0.0246371851906254 0"
+                animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 800; easing: easeOutBack">
+        <a-plane id="panel3-bg" width="3.2" height="2.2" color="#060E0A"
+                 material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
+        <a-plane id="panel3-border" width="3.24" height="2.24" color="#34D399" position="0 0 -0.008"
+                 material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
+        <a-text id="panel3-num" value="03" font="kelsonsans" align="left" position="-1.45 0.8 0.02"
+                color="#34D399" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
+        <a-text id="panel3-title" value="Sensory Feedback" font="kelsonsans" align="left"
+                position="-0.5 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="panel3-divider" position="0 0.42 0.02" width="2.9" height="0.006" depth="0.001"
+               color="#34D399" material="shader: flat; opacity: 0.5"></a-box>
+        <a-text id="panel3-desc"
+                value="Indra kita beradaptasi dengan aksi di dunia virtual — penglihatan, suara, hingga sentuhan yang terasa nyata."
+                font="kelsonsans" align="left" position="-1.45 0.2 0.02" color="#CBD5E1"
+                scale="0.72 0.72 0.72" width="4.8"></a-text>
+
+        <!-- DEMO: Pulsing sphere — gaze at it, it bounces + changes color (your eyes = sensor input) -->
+        <a-entity id="panel3-demo" position="0 -0.72 0.35">
+          <a-sphere id="demo3-ball" class="clickable" radius="0.26" color="#38BDF8"
+                    material="shader: flat" pulse-react>
+            <a-text class="pulse-label" visible="false" value="Tatap = Respons!" position="0 0.48 0"
+                    color="#FFFFFF" scale="0.72 0.72 0.72" align="center" font="kelsonsans"></a-text>
+          </a-sphere>
+          <!-- Sonar ring around the ball -->
+          <a-entity id="demo3-sonar"
+                    geometry="primitive: torus; radius: 0.36; radiusTubular: 0.01"
+                    material="color: #34D399; shader: flat; transparent: true; opacity: 0.45"
+                    animation="property: rotation; to: 0 360 360; loop: true; dur: 4500; easing: linear">
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!-- ==================== PANEL 4: Interactivity (Right) ==================== -->
+      <!-- Color accent: #FBBF24 (amber) -->
+      <a-entity id="panel4-wrapper" position="6.17212 2.2 -5.3058" rotation="0 -3.3328954942759985 0"
+                animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 900; easing: easeOutBack">
+        <a-plane id="panel4-bg" width="3.2" height="2.2" color="#0E0B04"
+                 material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
+        <a-plane id="panel4-border" width="3.24" height="2.24" color="#FBBF24" position="0 0 -0.008"
+                 material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
+        <a-text id="panel4-num" value="04" font="kelsonsans" align="left" position="-1.45 0.8 0.02"
+                color="#FBBF24" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
+        <a-text id="panel4-title" value="Interactivity" font="kelsonsans" align="left"
+                position="-0.65 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="panel4-divider" position="0 0.42 0.02" width="2.9" height="0.006" depth="0.001"
+               color="#FBBF24" material="shader: flat; opacity: 0.5"></a-box>
+        <a-text id="panel4-desc"
+                value="Kita bisa berinteraksi, bukan hanya melihat. Memanipulasi objek dan menjelajahi dunia virtual secara aktif."
+                font="kelsonsans" align="left" position="-1.45 0.2 0.02" color="#CBD5E1"
+                scale="0.72 0.72 0.72" width="4.8"></a-text>
+
+        <!-- DEMO: Cube that spins FAST when you gaze at it — your gaze = interaction -->
+        <a-entity id="panel4-demo" position="0 -0.72 0.35">
+          <a-box id="demo4-cube" class="clickable" width="0.42" height="0.42" depth="0.42"
+                 color="#FBBF24" material="shader: flat" gaze-spin>
+          </a-box>
+          <a-text class="spin-label" visible="false" value="Tatap = Berputar!" position="0 0.48 0"
+                  color="#FFFFFF" scale="0.72 0.72 0.72" align="center" font="kelsonsans"></a-text>
+          <!-- Corner sparks decorating the cube area -->
+          <a-entity id="demo4-ring"
+                    geometry="primitive: torus; radius: 0.38; radiusTubular: 0.01"
+                    material="color: #FBBF24; shader: flat; transparent: true; opacity: 0.3"
+                    animation="property: rotation; to: 360 0 360; loop: true; dur: 6000; easing: linear">
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!-- ==================== BACK BUTTON ==================== -->
+      <a-entity id="btn-back" position="0 0.35 -4.5" class="clickable" close-tab
+                geometry="primitive: plane; width: 1.8; height: 0.45"
+                material="transparent: true; opacity: 0"
+                animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
+                animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
+        <a-plane id="btn-back-bg" width="1.8" height="0.45" color="#060E28"
+                 material="transparent: true; opacity: 0.88; shader: flat" position="0 0 -0.001">
+        </a-plane>
+        <a-plane id="btn-back-border" width="1.82" height="0.47" color="#38BDF8"
+                 position="0 0 -0.005" material="shader: flat; transparent: true; opacity: 0.7">
+        </a-plane>
+        <a-text id="btn-back-text" value="KEMBALI" color="#38BDF8" scale="0.65 0.65 0.65"
+                align="center" position="0 0 0.02" font="kelsonsans"></a-text>
+      </a-entity>
+
+    </a-scene>
+  </body>
+</html>

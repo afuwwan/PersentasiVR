@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sejarah VR</title>
+    <!-- Import A-Frame library -->
+    <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
+    
+    <!-- Script untuk Tombol Tutup -->
+    <script>
+      AFRAME.registerComponent('close-tab', {
+        init: function () {
+          this.el.addEventListener('click', () => {
+            // Animasi tombol saat diklik
+            this.el.setAttribute('animation__click', 'property: scale; to: 0.95 0.95 0.95; dur: 150');
+            
+            setTimeout(() => {
+              // Tutup tab
+              window.close();
+              
+              // Fallback
+              setTimeout(() => {
+                window.location.href = 'presentasi.html';
+              }, 150);
+            }, 150);
+          });
+        }
+      });
+    </script>
+  </head>
+  <body>
+    <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+      
+      <!-- Camera -->
+      <a-entity camera look-controls position="0 1.6 0">
+        <a-entity cursor="fuse: true; fuseTimeout: 2000"
+                  position="0 0 -1"
+                  geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.018"
+                  material="color: #38BDF8; shader: flat; opacity: 0.8"
+                  raycaster="objects: .clickable"
+                  animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 2000; from: 1 1 1; to: 0.1 0.1 0.1"
+                  animation__mouseleave="property: scale; startEvents: mouseleave; easing: easeOutCubic; dur: 300; to: 1 1 1"
+                  animation__click="property: scale; startEvents: click; easing: easeOutCubic; dur: 150; from: 0.1 0.1 0.1; to: 1 1 1">
+        </a-entity>
+      </a-entity>
+
+      <!-- Lingkungan: Sangat gelap, tone hangat (Very dark warm tone) -->
+      <a-sky color="#080608"></a-sky>
+      <!-- Tanah gelap berbatu (Dark stone-like) -->
+      <a-plane color="#0c090c" rotation="-90 0 0" width="100" height="100"></a-plane>
+      
+      <!-- Header -->
+      <a-text value="SEJARAH VIRTUAL REALITY" font="kelsonsans" align="center" position="0 4.5 -6" color="#FFFFFF" scale="2.5 2.5 2.5" letterSpacing="2"></a-text>
+
+      <!-- GARIS TIMELINE (Timeline Line) -->
+      <a-box position="0 1.2 -6.5" width="11" height="0.03" depth="0.03" color="#0EA5E9"></a-box>
+
+      <!-- TITIK-TITIK TIMELINE (Glowing Dots) -->
+      <!-- Titik-titik ini ditempatkan tepat di atas garis untuk setiap panel -->
+      <a-sphere position="-5 1.2 -6.5" radius="0.08" color="#38BDF8"></a-sphere>
+      <a-sphere position="-2.5 1.2 -6.5" radius="0.08" color="#38BDF8"></a-sphere>
+      <a-sphere position="0 1.2 -6.5" radius="0.08" color="#38BDF8"></a-sphere>
+      <a-sphere position="2.5 1.2 -6.5" radius="0.08" color="#38BDF8"></a-sphere>
+      <a-sphere position="5 1.2 -6.5" radius="0.08" color="#38BDF8"></a-sphere>
+
+      <!-- PANEL TIMELINE (Membentuk setengah lingkaran/arc) -->
+      
+      <!-- Panel 1: 1960 Sensorama -->
+      <a-entity position="-5 2.5 -6" rotation="0 25 0" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
+        <!-- Bergantian warna antara #1a0a2e dan #0a1a2e -->
+        <a-plane color="#1a0a2e" width="2.5" height="2" opacity="0.95" class="clickable"
+                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
+                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
+          <a-plane color="#0EA5E9" width="2.54" height="2.04" position="0 0 -0.01" opacity="0.5"></a-plane>
+          
+          <a-text value="1960" font="kelsonsans" align="center" position="0 0.6 0.02" color="#0EA5E9" scale="2.5 2.5 2.5"></a-text>
+          <a-text value="Sensorama (Morton Heilig)" font="kelsonsans" align="center" position="0 0.1 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
+          <a-text value="Perangkat pertama yang merangsang lima indra manusia sekaligus. Pengguna bisa merasakan suasana berkendara motor di kota \u2014 melihat jalan, mendengar mesin, merasakan getaran, hingga mencium bau." font="kelsonsans" align="center" position="0 -0.45 0.02" color="#CBD5E1" scale="0.85 0.85 0.85" wrap-count="32"></a-text>
+        </a-plane>
+      </a-entity>
+
+      <!-- Panel 2: 1960 Telesphere Mask -->
+      <a-entity position="-2.5 2.5 -7" rotation="0 12 0" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
+        <a-plane color="#0a1a2e" width="2.5" height="2" opacity="0.95" class="clickable"
+                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
+                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
+          <a-plane color="#0EA5E9" width="2.54" height="2.04" position="0 0 -0.01" opacity="0.5"></a-plane>
+          
+          <a-text value="1960" font="kelsonsans" align="center" position="0 0.6 0.02" color="#0EA5E9" scale="2.5 2.5 2.5"></a-text>
+          <a-text value="Telesphere Mask" font="kelsonsans" align="center" position="0 0.1 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
+          <a-text value="HMD (Head-Mounted Display) pertama dalam sejarah. Berbentuk seperti kacamata besar untuk menonton film 3D, namun belum bisa merespons gerakan kepala." font="kelsonsans" align="center" position="0 -0.45 0.02" color="#CBD5E1" scale="0.85 0.85 0.85" wrap-count="32"></a-text>
+        </a-plane>
+      </a-entity>
+
+      <!-- Panel 3: 1968 Sword of Damocles -->
+      <a-entity position="0 2.5 -7.5" rotation="0 0 0" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
+        <a-plane color="#1a0a2e" width="2.5" height="2" opacity="0.95" class="clickable"
+                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
+                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
+          <a-plane color="#0EA5E9" width="2.54" height="2.04" position="0 0 -0.01" opacity="0.5"></a-plane>
+          
+          <a-text value="1968" font="kelsonsans" align="center" position="0 0.6 0.02" color="#0EA5E9" scale="2.5 2.5 2.5"></a-text>
+          <a-text value="Sword of Damocles" font="kelsonsans" align="center" position="0 0.1 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
+          <a-text value="Kacamata VR pertama yang terhubung ke komputer. Karena sangat berat, harus digantung di langit-langit menggunakan lengan mekanis \u2014 dijuluki 'Pedang Damocles'." font="kelsonsans" align="center" position="0 -0.45 0.02" color="#CBD5E1" scale="0.85 0.85 0.85" wrap-count="32"></a-text>
+        </a-plane>
+      </a-entity>
+
+      <!-- Panel 4: 1993 Sega VR -->
+      <a-entity position="2.5 2.5 -7" rotation="0 -12 0" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
+        <a-plane color="#0a1a2e" width="2.5" height="2" opacity="0.95" class="clickable"
+                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
+                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
+          <a-plane color="#0EA5E9" width="2.54" height="2.04" position="0 0 -0.01" opacity="0.5"></a-plane>
+          
+          <a-text value="1993" font="kelsonsans" align="center" position="0 0.6 0.02" color="#0EA5E9" scale="2.5 2.5 2.5"></a-text>
+          <a-text value="Sega VR" font="kelsonsans" align="center" position="0 0.1 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
+          <a-text value="Industri game mencoba membawa VR ke rumah. Sega membuat prototipe kacamata VR untuk konsol Genesis, namun gagal rilis karena masalah teknis yang membuat pengguna pusing." font="kelsonsans" align="center" position="0 -0.45 0.02" color="#CBD5E1" scale="0.85 0.85 0.85" wrap-count="32"></a-text>
+        </a-plane>
+      </a-entity>
+
+      <!-- Panel 5: Sekarang Meta Quest -->
+      <a-entity position="5 2.5 -6" rotation="0 -25 0" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
+        <a-plane color="#1a0a2e" width="2.5" height="2" opacity="0.95" class="clickable"
+                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
+                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
+          <a-plane color="#0EA5E9" width="2.54" height="2.04" position="0 0 -0.01" opacity="0.5"></a-plane>
+          
+          <a-text value="Sekarang" font="kelsonsans" align="center" position="0 0.6 0.02" color="#0EA5E9" scale="2.2 2.2 2.2"></a-text>
+          <a-text value="Meta Quest (Standalone)" font="kelsonsans" align="center" position="0 0.1 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
+          <a-text value="Era Standalone VR. Tidak membutuhkan kabel atau komputer besar. Semua sensor, mesin, dan layar sudah tertanam di dalam headset \u2014 simulasi dunia digital yang praktis dan nyata." font="kelsonsans" align="center" position="0 -0.45 0.02" color="#CBD5E1" scale="0.85 0.85 0.85" wrap-count="32"></a-text>
+        </a-plane>
+      </a-entity>
+
+      <!-- Tombol Kembali / Tutup -->
+      <a-entity position="0 0.2 -4">
+        <a-plane class="clickable" color="#1E293B" width="2" height="0.5" close-tab
+                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
+                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
+          <a-plane color="#0EA5E9" width="2.03" height="0.53" position="0 0 -0.01"></a-plane>
+          <a-text value="Kembali / Tutup" font="kelsonsans" align="center" position="0 0 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
+        </a-plane>
+      </a-entity>
+
+    </a-scene>
+  </body>
+</html>
