@@ -13,10 +13,7 @@
           this.el.addEventListener('click', () => {
             this.el.setAttribute('animation__click', 'property: scale; to: 0.9 0.9 0.9; dur: 150');
             setTimeout(() => {
-              window.close();
-              setTimeout(() => {
-                window.location.href = 'presentasi.html';
-              }, 150);
+              window.location.href = 'presentasi.html';
             }, 150);
           });
         }
@@ -246,121 +243,13 @@
         <a-text id="btn-back-text" value="KEMBALI" color="#00FFFF" scale="0.6 0.6 0.6" align="center" position="0 0 0.02" font="kelsonsans"></a-text>
       </a-entity>
 
-      <!-- ========== VR CONCEPT DEMO ========== -->
-      <!-- Illustrates: "dunia alternatif... merespond pergerakan manusia" -->
-      <a-entity id="vr-demo" position="3.8 1.5 -6">
-
-        <!-- HUMAN FIGURE (wearing VR headset) -->
-        <a-entity id="vr-demo-human" position="-1.4 0 0">
-          <!-- Head -->
-          <a-sphere id="demo-head" position="0 1.1 0" radius="0.22" color="#F4C48E" material="shader: flat"></a-sphere>
-          <!-- VR Headset body -->
-          <a-box id="demo-headset-body" position="0 1.1 0.16" width="0.48" height="0.2" depth="0.14" color="#0EA5E9" material="shader: flat"></a-box>
-          <!-- Headset strap -->
-          <a-box id="demo-headset-strap" position="0 1.1 -0.09" width="0.48" height="0.06" depth="0.24" color="#0284C7" material="shader: flat"></a-box>
-          <!-- Lens glows -->
-          <a-entity id="demo-lens-l" position="-0.1 1.1 0.24"
-            geometry="primitive: circle; radius: 0.065"
-            material="color: #00FFFF; shader: flat; opacity: 0.9"
-            animation="property: material.opacity; from: 0.5; to: 1.0; dur: 900; loop: true; dir: alternate; easing: easeInOutSine">
-          </a-entity>
-          <a-entity id="demo-lens-r" position="0.1 1.1 0.24"
-            geometry="primitive: circle; radius: 0.065"
-            material="color: #00FFFF; shader: flat; opacity: 0.9"
-            animation="property: material.opacity; from: 0.5; to: 1.0; dur: 900; loop: true; dir: alternate; easing: easeInOutSine">
-          </a-entity>
-          <!-- Body -->
-          <a-cylinder id="demo-body" position="0 0.5 0" radius="0.18" height="0.68" color="#1E3A5F" material="shader: flat"></a-cylinder>
-          <!-- Left arm raised forward (reaching into the virtual world) -->
-          <a-cylinder id="demo-arm-l" position="-0.3 0.62 0.1" radius="0.055" height="0.52" rotation="0 0 35" color="#1E3A5F" material="shader: flat"></a-cylinder>
-          <!-- Right arm raised forward -->
-          <a-cylinder id="demo-arm-r" position="0.3 0.62 0.1" radius="0.055" height="0.52" rotation="0 0 -35" color="#1E3A5F" material="shader: flat"></a-cylinder>
-          <!-- Legs -->
-          <a-cylinder id="demo-leg-l" position="-0.1 0 0" radius="0.075" height="0.5" color="#1E3A5F" material="shader: flat"></a-cylinder>
-          <a-cylinder id="demo-leg-r" position="0.1 0 0" radius="0.075" height="0.5" color="#1E3A5F" material="shader: flat"></a-cylinder>
-          <!-- Label -->
-          <a-text id="demo-human-label" value="Pengguna VR" position="0 -0.45 0" color="#94A3B8" scale="0.42 0.42 0.42" align="center" font="kelsonsans"></a-text>
-        </a-entity>
-
-        <!-- GAZE BEAM (headset → digital world) -->
-        <a-cylinder id="demo-gaze-beam"
-          position="-0.35 1.1 0"
-          rotation="0 0 90"
-          radius="0.012" height="2.1"
-          color="#00FFFF"
-          material="shader: flat; transparent: true; opacity: 0.35"
-          animation="property: material.opacity; from: 0.1; to: 0.55; dur: 1100; loop: true; dir: alternate; easing: easeInOutSine">
-        </a-cylinder>
-
-        <!-- DIGITAL WORLD ORB -->
-        <a-entity id="vr-demo-world" position="1.15 1.1 0">
-          <!-- Outer spinning ring -->
-          <a-entity id="demo-world-ring-h"
-            geometry="primitive: torus; radius: 0.58; radiusTubular: 0.014"
-            material="color: #00FFFF; shader: flat; transparent: true; opacity: 0.45"
-            animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear">
-          </a-entity>
-          <!-- Second ring (tilted) -->
-          <a-entity id="demo-world-ring-v"
-            rotation="90 0 0"
-            geometry="primitive: torus; radius: 0.58; radiusTubular: 0.01"
-            material="color: #38BDF8; shader: flat; transparent: true; opacity: 0.25"
-            animation="property: rotation; to: 360 0 0; loop: true; dur: 7000; easing: linear">
-          </a-entity>
-          <!-- Core orb -->
-          <a-sphere id="demo-world-orb" radius="0.38" color="#020B18"
-            material="transparent: true; opacity: 0.9; shader: flat"
-            animation="property: scale; from: 0.96 0.96 0.96; to: 1.04 1.04 1.04; dur: 2200; loop: true; dir: alternate; easing: easeInOutSine">
-          </a-sphere>
-          <!-- Glow halo -->
-          <a-sphere id="demo-world-glow" radius="0.42" color="#00FFFF"
-            material="shader: flat; transparent: true; opacity: 0.12"
-            animation="property: material.opacity; from: 0.05; to: 0.25; dur: 1800; loop: true; dir: alternate">
-          </a-sphere>
-
-          <!-- Orbiting CUBE (represents objects you can interact with) -->
-          <a-entity id="demo-orbit-cube"
-            animation="property: rotation; to: 0 360 0; loop: true; dur: 3200; easing: linear">
-            <a-box id="demo-orb-cube" position="0.58 0 0" width="0.11" height="0.11" depth="0.11"
-              color="#38BDF8" material="shader: flat"
-              animation="property: rotation; to: 360 360 0; loop: true; dur: 1800; easing: linear">
-            </a-box>
-          </a-entity>
-
-          <!-- Orbiting SPHERE (represents environment) -->
-          <a-entity id="demo-orbit-sphere"
-            rotation="0 120 55"
-            animation="property: rotation; to: 0 480 55; loop: true; dur: 4800; easing: linear">
-            <a-sphere id="demo-orb-sphere" position="0.58 0 0" radius="0.08"
-              color="#A78BFA" material="shader: flat">
-            </a-sphere>
-          </a-entity>
-
-          <!-- Orbiting CONE (represents dynamic shapes) -->
-          <a-entity id="demo-orbit-cone"
-            rotation="0 240 -40"
-            animation="property: rotation; to: 0 600 -40; loop: true; dur: 5800; easing: linear">
-            <a-cone id="demo-orb-cone" position="0.58 0 0" radius-bottom="0.075" height="0.15"
-              color="#34D399" material="shader: flat">
-            </a-cone>
-          </a-entity>
-
-          <!-- Label -->
-          <a-text id="demo-world-label" value="Dunia Digital" position="0 -0.7 0" color="#00FFFF" scale="0.42 0.42 0.42" align="center" font="kelsonsans"></a-text>
-        </a-entity>
-
-        <!-- Section label at top -->
-        <a-text id="demo-section-label" value="SIMULASI KONSEP VR" position="-0.2 2.1 0" color="#38BDF8" scale="0.38 0.38 0.38" align="center" letterSpacing="4" font="kelsonsans"></a-text>
-
-      </a-entity>
-      <!-- ========== END VR CONCEPT DEMO ========== -->
       <!-- ========== INTERACTIVE BALLS (Coba Tatap!) ========== -->
       <!-- These balls react to gaze: bounce + change color to show VR responds to user -->
       <a-entity id="interact-zone" position="3.02038 0 -2.10035">
 
         <!-- Instruction hint floating near start -->
-        <a-text id="interact-hint" value="Gunakan W A S D untuk berjalan\nTatap bola untuk berinteraksi!" 
-          position="0 2.8 -3" color="#38BDF8" scale="0.55 0.55 0.55" align="center" font="kelsonsans"
+        <a-text id="interact-hint" rotation="18.790723849110478 0 0" value="Gunakan W A S D untuk berjalan\nTatap bola untuk berinteraksi!" 
+          position="-2.00519 2.73892 -2.02527" color="#38BDF8" scale="0.55 0.55 0.55" align="center" font="kelsonsans"
           animation="property: material.opacity; from: 1; to: 0; delay: 8000; dur: 1500"></a-text>
 
         <!-- Ball 1 -->

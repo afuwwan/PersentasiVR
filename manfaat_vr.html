@@ -12,17 +12,9 @@
       AFRAME.registerComponent('close-tab', {
         init: function () {
           this.el.addEventListener('click', () => {
-            // Animasi tombol saat diklik
             this.el.setAttribute('animation__click', 'property: scale; to: 0.95 0.95 0.95; dur: 150');
-            
             setTimeout(() => {
-              // Tutup tab
-              window.close();
-              
-              // Fallback
-              setTimeout(() => {
-                window.location.href = 'presentasi.html';
-              }, 150);
+              window.location.href = 'presentasi.html';
             }, 150);
           });
         }

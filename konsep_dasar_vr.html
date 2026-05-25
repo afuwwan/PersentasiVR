@@ -12,10 +12,7 @@
         init: function () {
           this.el.addEventListener('click', () => {
             this.el.setAttribute('animation__click', 'property: scale; to: 0.95 0.95 0.95; dur: 150');
-            setTimeout(() => {
-              window.close();
-              setTimeout(() => { window.location.href = 'presentasi.html'; }, 150);
-            }, 150);
+            setTimeout(() => { window.location.href = 'presentasi.html'; }, 150);
           });
         }
       });
@@ -155,25 +152,25 @@
 
       <!-- ==================== PANEL 1: Virtual World (Front-Left) ==================== -->
       <!-- Color accent: #38BDF8 (sky blue) -->
-      <a-entity id="panel1-wrapper" position="-6.58514 2.2 -4.92557" rotation="0 -0.25095551426730056 0"
+      <a-entity id="panel1-wrapper" position="-6.58514 2.2 -4.92557" rotation="0 38.79898301287396 0"
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 600; easing: easeOutBack">
-        <a-plane id="panel1-bg" width="3.2" height="2.2" color="#060E28"
+        <a-plane id="panel1-bg" scale="1.18731 1 1" width="3.2" height="2.2" color="#060E28"
                  material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
-        <a-plane id="panel1-border" width="3.24" height="2.24" color="#38BDF8" position="0 0 -0.008"
+        <a-plane id="panel1-border" scale="1.18692 1 1" width="3.24" height="2.24" color="#38BDF8" position="0 0 -0.008"
                  material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
         <!-- Badge number -->
-        <a-text id="panel1-num" value="01" font="kelsonsans" align="left" position="-1.45 0.8 0.02"
+        <a-text id="panel1-num" value="01" font="kelsonsans" align="left" position="-1.80461 0.76533 0.02"
                 color="#38BDF8" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
         <!-- Title -->
         <a-text id="panel1-title" value="Virtual World" font="kelsonsans" align="left"
-                position="-0.75 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+                position="-0.77839 0.74948 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
         <!-- Divider -->
-        <a-box id="panel1-divider" position="0 0.42 0.02" width="2.9" height="0.006" depth="0.001"
+        <a-box id="panel1-divider" scale="1.1316 1 1" position="0 0.38048 0.02" width="2.9" height="0.006" depth="0.001"
                color="#38BDF8" material="shader: flat; opacity: 0.5"></a-box>
         <!-- Description -->
         <a-text id="panel1-desc"
                 value="Lingkungan 3D yang dibentuk menggunakan komputer. Sebuah dunia yang sepenuhnya digital dan bisa kita jelajahi."
-                font="kelsonsans" align="left" position="-1.45 0.2 0.02" color="#CBD5E1"
+                font="kelsonsans" align="left" position="-1.57361 0.02775 0.02" color="#CBD5E1"
                 scale="0.72 0.72 0.72" width="4.8"></a-text>
 
         <!-- DEMO: Mini solar system = "a whole world inside a computer" -->
@@ -206,21 +203,21 @@
 
       <!-- ==================== PANEL 2: Immersion (Front-Right) ==================== -->
       <!-- Color accent: #A78BFA (purple) -->
-      <a-entity id="panel2-wrapper" position="-2.47524 2.2 -5.17442" rotation="0 3.2595568964992534 0"
+      <a-entity id="panel2-wrapper" position="-2.47524 2.2 -6.23196" rotation="0 3.2595568964992534 0"
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 700; easing: easeOutBack">
-        <a-plane id="panel2-bg" width="3.2" height="2.2" color="#0A060E"
+        <a-plane id="panel2-bg" scale="1.15303 1 1" width="3.2" height="2.2" color="#0A060E"
                  material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
-        <a-plane id="panel2-border" width="3.24" height="2.24" color="#A78BFA" position="0 0 -0.008"
+        <a-plane id="panel2-border" scale="1.16152 1 1" width="3.24" height="2.24" color="#A78BFA" position="0 0 -0.008"
                  material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
-        <a-text id="panel2-num" value="02" font="kelsonsans" align="left" position="-1.45 0.8 0.02"
+        <a-text id="panel2-num" value="02" font="kelsonsans" align="left" position="-1.81701 0.77279 0.02"
                 color="#A78BFA" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
         <a-text id="panel2-title" value="Immersion" font="kelsonsans" align="left"
-                position="-0.75 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
-        <a-box id="panel2-divider" position="0 0.42 0.02" width="2.9" height="0.006" depth="0.001"
+                position="-0.86699 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="panel2-divider" scale="1.23761 1 1" position="0 0.38493 0.02" width="2.9" height="0.006" depth="0.001"
                color="#A78BFA" material="shader: flat; opacity: 0.5"></a-box>
         <a-text id="panel2-desc"
                 value="Rasa keberadaan diri di dunia lain. VR membuat kita benar-benar merasa berada di dalam lingkungan digital."
-                font="kelsonsans" align="left" position="-1.45 0.2 0.02" color="#CBD5E1"
+                font="kelsonsans" align="left" position="-1.67437 0.0203 0.02" color="#CBD5E1"
                 scale="0.72 0.72 0.72" width="4.8"></a-text>
 
         <!-- DEMO: Shrinking concentric rings = "pulled deeper in" -->
@@ -252,21 +249,21 @@
 
       <!-- ==================== PANEL 3: Sensory Feedback (Left) ==================== -->
       <!-- Color accent: #34D399 (emerald) -->
-      <a-entity id="panel3-wrapper" position="1.73761 2.2 -5.41766" rotation="0 -0.0246371851906254 0"
+      <a-entity id="panel3-wrapper" position="1.73761 2.2 -6.38621" rotation="0 -0.0246371851906254 0"
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 800; easing: easeOutBack">
-        <a-plane id="panel3-bg" width="3.2" height="2.2" color="#060E0A"
+        <a-plane id="panel3-bg" scale="1.24299 1 1" width="3.2" height="2.2" color="#060E0A"
                  material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
-        <a-plane id="panel3-border" width="3.24" height="2.24" color="#34D399" position="0 0 -0.008"
+        <a-plane id="panel3-border" scale="1.24855 1 1" width="3.24" height="2.24" color="#34D399" position="0.00001 0 -0.008"
                  material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
-        <a-text id="panel3-num" value="03" font="kelsonsans" align="left" position="-1.45 0.8 0.02"
+        <a-text id="panel3-num" value="03" font="kelsonsans" align="left" position="-1.94003 0.76381 0.02"
                 color="#34D399" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
         <a-text id="panel3-title" value="Sensory Feedback" font="kelsonsans" align="left"
-                position="-0.5 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
-        <a-box id="panel3-divider" position="0 0.42 0.02" width="2.9" height="0.006" depth="0.001"
+                position="-1.12222 0.77828 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="panel3-divider" scale="1.30393 1 1" position="0 0.36933 0.02" width="2.9" height="0.006" depth="0.001"
                color="#34D399" material="shader: flat; opacity: 0.5"></a-box>
         <a-text id="panel3-desc"
                 value="Indra kita beradaptasi dengan aksi di dunia virtual — penglihatan, suara, hingga sentuhan yang terasa nyata."
-                font="kelsonsans" align="left" position="-1.45 0.2 0.02" color="#CBD5E1"
+                font="kelsonsans" align="left" position="-1.55194 -0.04252 0.02" color="#CBD5E1"
                 scale="0.72 0.72 0.72" width="4.8"></a-text>
 
         <!-- DEMO: Pulsing sphere — gaze at it, it bounces + changes color (your eyes = sensor input) -->
@@ -287,21 +284,21 @@
 
       <!-- ==================== PANEL 4: Interactivity (Right) ==================== -->
       <!-- Color accent: #FBBF24 (amber) -->
-      <a-entity id="panel4-wrapper" position="6.17212 2.2 -5.3058" rotation="0 -3.3328954942759985 0"
+      <a-entity id="panel4-wrapper" position="6.17212 2.2 -5.3058" rotation="0 -34.98824071745885 0"
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 900; easing: easeOutBack">
-        <a-plane id="panel4-bg" width="3.2" height="2.2" color="#0E0B04"
+        <a-plane id="panel4-bg" scale="1.22218 1 1" width="3.2" height="2.2" color="#0E0B04"
                  material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
-        <a-plane id="panel4-border" width="3.24" height="2.24" color="#FBBF24" position="0 0 -0.008"
+        <a-plane id="panel4-border" scale="1.21997 1 1" width="3.24" height="2.24" color="#FBBF24" position="0 0 -0.008"
                  material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
-        <a-text id="panel4-num" value="04" font="kelsonsans" align="left" position="-1.45 0.8 0.02"
+        <a-text id="panel4-num" value="04" font="kelsonsans" align="left" position="-1.92371 0.8 0.02"
                 color="#FBBF24" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
         <a-text id="panel4-title" value="Interactivity" font="kelsonsans" align="left"
-                position="-0.65 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
-        <a-box id="panel4-divider" position="0 0.42 0.02" width="2.9" height="0.006" depth="0.001"
+                position="-0.99231 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="panel4-divider" scale="1.25982 1 1" position="0 0.40144 0.02" width="2.9" height="0.006" depth="0.001"
                color="#FBBF24" material="shader: flat; opacity: 0.5"></a-box>
         <a-text id="panel4-desc"
                 value="Kita bisa berinteraksi, bukan hanya melihat. Memanipulasi objek dan menjelajahi dunia virtual secara aktif."
-                font="kelsonsans" align="left" position="-1.45 0.2 0.02" color="#CBD5E1"
+                font="kelsonsans" align="left" position="-1.72717 -0.0047 0.02" color="#CBD5E1"
                 scale="0.72 0.72 0.72" width="4.8"></a-text>
 
         <!-- DEMO: Cube that spins FAST when you gaze at it — your gaze = interaction -->
