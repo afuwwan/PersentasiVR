@@ -52,13 +52,12 @@
           var canvas = document.getElementById('aiv-grid-texture');
           var ctx = canvas.getContext('2d');
           
-          // Draw black background
-          ctx.fillStyle = '#000000';
-          ctx.fillRect(0, 0, 128, 128);
+          // Clear background (so it remains transparent)
+          ctx.clearRect(0, 0, 128, 128);
           
           // Draw cyan lines every 32px
           ctx.strokeStyle = '#00FFFF';
-          ctx.lineWidth = 1;
+          ctx.lineWidth = 2;
           for(var i = 0; i <= 128; i += 32) {
             ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, 128); ctx.stroke();
             ctx.beginPath(); ctx.moveTo(0, i); ctx.lineTo(128, i); ctx.stroke();
@@ -114,21 +113,32 @@
           var el = this.el;
           var data = this.data;
           var colors = ['#FF6B6B', '#38BDF8', '#A78BFA', '#34D399', '#FBBF24', '#F472B6', '#00FFFF', '#818CF8'];
-          var originalY = parseFloat(el.getAttribute('position').y);
+          
+          // Get the initial position attribute directly from the HTML/init values
+          var posAttr = el.getAttribute('position');
+          var originalX = posAttr.x;
+          var originalY = posAttr.y;
+          var originalZ = posAttr.z;
+          
+          // Store the original idle animation attribute configuration
+          var idleAttr = el.getAttribute('animation__idle');
           var bouncing = false;
 
           el.addEventListener('mouseenter', function () {
             if (bouncing) return;
             bouncing = true;
 
+            // Stop and remove the idle animation to avoid conflict during bounce
+            el.removeAttribute('animation__idle');
+
             // Pick a random new color
             var newColor = colors[Math.floor(Math.random() * colors.length)];
             el.setAttribute('material', 'color', newColor);
 
-            // Bounce up
+            // Bounce up (animating complete position using unique X and Z to avoid A-Frame zero-out bugs)
             el.setAttribute('animation__bounce-up', {
-              property: 'position.y',
-              to: originalY + 1.2,
+              property: 'position',
+              to: `${originalX} ${originalY + 1.2} ${originalZ}`,
               dur: 350,
               easing: 'easeOutQuad'
             });
@@ -156,9 +166,11 @@
 
             // After peak, fall back down
             setTimeout(function () {
+              el.removeAttribute('animation__bounce-up');
+              
               el.setAttribute('animation__bounce-down', {
-                property: 'position.y',
-                to: originalY,
+                property: 'position',
+                to: `${originalX} ${originalY} ${originalZ}`,
                 dur: 500,
                 easing: 'easeInQuad'
               });
@@ -170,11 +182,19 @@
               });
             }, 350);
 
-            // Hide label, reset color + state
+            // Restore idle state, color, and animation after the full bounce cycle completes
             setTimeout(function () {
+              el.removeAttribute('animation__bounce-down');
+              el.removeAttribute('animation__squash');
+              el.removeAttribute('animation__unsquash');
+              
               if (label) label.setAttribute('visible', 'false');
-              // restore original material color
               el.setAttribute('material', 'color', data.originalColor);
+              
+              // Re-add the original idle animation
+              if (idleAttr) {
+                el.setAttribute('animation__idle', idleAttr);
+              }
               bouncing = false;
             }, 1200);
           });
@@ -204,11 +224,11 @@
 
       <!-- ENVIRONMENT -->
       <a-sky id="aiv-env-sky" color="#000814"></a-sky>
-      <!-- Ground plane -->
-      <a-plane id="aiv-env-ground" position="0 0 0" rotation="-90 0 0" width="100" height="100" material="color: #000814; transparent: true"></a-plane>
-      <!-- Grid overlay on ground -->
+      <!-- Ground plane (Solid flat shader prevents WebGL depth-sorting glitches) -->
+      <a-plane id="aiv-env-ground" position="0 0 0" rotation="-90 0 0" width="100" height="100" material="color: #000814; shader: flat"></a-plane>
+      <!-- Grid overlay on ground (References the correct canvas texture ID) -->
       <a-plane id="aiv-env-grid" position="0 0.01 0" rotation="-90 0 0" width="100" height="100" 
-               material="src: #grid-texture; repeat: 40 40; transparent: true; opacity: 0.35" grid-drawer></a-plane>
+               material="src: #aiv-grid-texture; repeat: 40 40; transparent: true; opacity: 0.35; shader: flat" grid-drawer></a-plane>
 
       <!-- FLOATING RINGS (Torus Decorations) -->
       <a-entity id="aiv-torus-1" position="-6 3 -10" rotation="30 0 0" 
