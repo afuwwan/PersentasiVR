@@ -7,6 +7,34 @@
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
 
     <script>
+      // Detect low-end / mobile device
+      window.isLowEndDevice = AFRAME.utils.device.isMobile() || 
+                             (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                             /perf=low/i.test(window.location.search);
+
+      AFRAME.registerComponent('low-end-optimize', {
+        init: function () {
+          var sceneEl = this.el;
+          var isLow = window.isLowEndDevice;
+          var maxRatio = isLow ? 1.0 : 1.35;
+          
+          sceneEl.setAttribute('renderer', {
+            antialias: !isLow,
+            precision: isLow ? 'medium' : 'high',
+            powerPreference: 'high-performance',
+            logarithmicDepthBuffer: false
+          });
+
+          var applyPixelRatio = () => {
+            if (sceneEl.renderer) {
+              sceneEl.renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxRatio));
+            }
+          };
+          if (sceneEl.renderer) { applyPixelRatio(); }
+          else { sceneEl.addEventListener('render-target-loaded', applyPixelRatio); }
+        }
+      });
+
       AFRAME.registerComponent('close-tab', {
         init: function () {
           this.el.addEventListener('click', () => {
@@ -19,8 +47,10 @@
       // Ambient floating particles with warm amber tones
       AFRAME.registerComponent('floating-particles', {
         init: function () {
+          var isLow = window.isLowEndDevice;
+          var count = isLow ? 6 : 18;
           const colors = ['#F59E0B', '#FB923C', '#A78BFA', '#38BDF8', '#34D399'];
-          for (let i = 0; i < 50; i++) {
+          for (let i = 0; i < count; i++) {
             let sphere = document.createElement('a-sphere');
             let x = (Math.random() - 0.5) * 30;
             let y = Math.random() * 8 + 0.5;
@@ -39,7 +69,7 @@
     </script>
   </head>
   <body>
-    <a-scene id="sjr-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+    <a-scene renderer="antialias: false; precision: medium; powerPreference: high-performance" low-end-optimize id="sjr-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
       <a-assets>
         <img id="sjr-img-sensorama"      src="img/sensorama.png">

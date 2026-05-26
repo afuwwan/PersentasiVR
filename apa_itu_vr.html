@@ -8,6 +8,34 @@
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
     
     <script>
+      // Detect low-end / mobile device
+      window.isLowEndDevice = AFRAME.utils.device.isMobile() || 
+                             (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                             /perf=low/i.test(window.location.search);
+
+      AFRAME.registerComponent('low-end-optimize', {
+        init: function () {
+          var sceneEl = this.el;
+          var isLow = window.isLowEndDevice;
+          var maxRatio = isLow ? 1.0 : 1.35;
+          
+          sceneEl.setAttribute('renderer', {
+            antialias: !isLow,
+            precision: isLow ? 'medium' : 'high',
+            powerPreference: 'high-performance',
+            logarithmicDepthBuffer: false
+          });
+
+          var applyPixelRatio = () => {
+            if (sceneEl.renderer) {
+              sceneEl.renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxRatio));
+            }
+          };
+          if (sceneEl.renderer) { applyPixelRatio(); }
+          else { sceneEl.addEventListener('render-target-loaded', applyPixelRatio); }
+        }
+      });
+
       AFRAME.registerComponent('close-tab', {
         init: function () {
           this.el.addEventListener('click', () => {
@@ -48,7 +76,10 @@
 
       AFRAME.registerComponent('floating-particles', {
         init: function () {
-          const positions = [
+          var isLow = window.isLowEndDevice;
+          const positions = isLow ? [
+            "-3 1.5 -6", "4 2 -8", "2 1 -5", "-4 2 -7"
+          ] : [
             "-3 1.5 -6", "4 2 -8", "-5 3 -11", "2 1 -5",
             "-2 4 -9", "5 1.5 -6", "-4 2 -7", "3 3 -10"
           ];
@@ -152,7 +183,7 @@
     </script>
   </head>
   <body>
-    <a-scene id="aiv-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+    <a-scene renderer="antialias: false; precision: medium; powerPreference: high-performance" low-end-optimize id="aiv-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
       
       <a-assets>
         <canvas id="aiv-grid-texture" width="128" height="128"></canvas>

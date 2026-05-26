@@ -7,6 +7,34 @@
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
 
     <script>
+      // Detect low-end / mobile device
+      window.isLowEndDevice = AFRAME.utils.device.isMobile() || 
+                             (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                             /perf=low/i.test(window.location.search);
+
+      AFRAME.registerComponent('low-end-optimize', {
+        init: function () {
+          var sceneEl = this.el;
+          var isLow = window.isLowEndDevice;
+          var maxRatio = isLow ? 1.0 : 1.35;
+          
+          sceneEl.setAttribute('renderer', {
+            antialias: !isLow,
+            precision: isLow ? 'medium' : 'high',
+            powerPreference: 'high-performance',
+            logarithmicDepthBuffer: false
+          });
+
+          var applyPixelRatio = () => {
+            if (sceneEl.renderer) {
+              sceneEl.renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxRatio));
+            }
+          };
+          if (sceneEl.renderer) { applyPixelRatio(); }
+          else { sceneEl.addEventListener('render-target-loaded', applyPixelRatio); }
+        }
+      });
+
       // Back navigation
       AFRAME.registerComponent('close-tab', {
         init: function () {
@@ -20,8 +48,10 @@
       // Ambient floating particles
       AFRAME.registerComponent('floating-particles', {
         init: function () {
+          var isLow = window.isLowEndDevice;
+          var count = isLow ? 6 : 18;
           const colors = ['#38BDF8', '#A78BFA', '#34D399', '#FBBF24', '#F472B6'];
-          for (let i = 0; i < 55; i++) {
+          for (let i = 0; i < count; i++) {
             let sphere = document.createElement('a-sphere');
             let x = (Math.random() - 0.5) * 35;
             let y = Math.random() * 9 + 0.5;
@@ -107,7 +137,7 @@
     </script>
   </head>
   <body>
-    <a-scene id="kdv-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+    <a-scene renderer="antialias: false; precision: medium; powerPreference: high-performance" low-end-optimize id="kdv-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
       <!-- Camera: look + WASD walk -->
       <a-entity id="kdv-main-camera" camera look-controls wasd-controls="acceleration: 15" position="0 1.6 0">
@@ -170,7 +200,7 @@
         <!-- Description -->
         <a-text id="kdv-panel1-desc"
                 value="Lingkungan 3D yang dibentuk menggunakan komputer. Sebuah dunia yang sepenuhnya digital dan bisa kita jelajahi."
-                font="kelsonsans" align="left" position="-1.49247 -0.38567 0.02" color="#CBD5E1"
+                font="kelsonsans" align="left" position="-1.57508 -0.11385 0.04981" color="#CBD5E1"
                 scale="0.72 0.72 0.72" width="4.8"></a-text>
 
         <!-- DEMO: Mini solar system = "a whole world inside a computer" -->
@@ -217,7 +247,7 @@
                color="#A78BFA" material="shader: flat; opacity: 0.5"></a-box>
         <a-text id="kdv-panel2-desc"
                 value="Rasa keberadaan diri di dunia lain. VR membuat kita benar-benar merasa berada di dalam lingkungan digital."
-                font="kelsonsans" align="left" position="-1.41005 -0.3918 0.02" color="#CBD5E1"
+                font="kelsonsans" align="left" position="-1.65492 -0.07058 0.00605" color="#CBD5E1"
                 scale="0.72 0.72 0.72" width="4.8"></a-text>
 
         <!-- DEMO: Shrinking concentric rings = "pulled deeper in" -->
@@ -263,7 +293,7 @@
                color="#34D399" material="shader: flat; opacity: 0.5"></a-box>
         <a-text id="kdv-panel3-desc"
                 value="Indra kita beradaptasi dengan aksi di dunia virtual — penglihatan, suara, hingga sentuhan yang terasa nyata."
-                font="kelsonsans" align="left" position="-1.35 -0.37853 0.02" color="#CBD5E1"
+                font="kelsonsans" align="left" position="-1.57828 -0.11951 0.0201" color="#CBD5E1"
                 scale="0.72 0.72 0.72" width="4.8"></a-text>
 
         <!-- DEMO: Pulsing sphere — gaze at it, it bounces + changes color (your eyes = sensor input) -->
@@ -298,7 +328,7 @@
                color="#FBBF24" material="shader: flat; opacity: 0.5"></a-box>
         <a-text id="kdv-panel4-desc"
                 value="Kita bisa berinteraksi, bukan hanya melihat. Memanipulasi objek dan menjelajahi dunia virtual secara aktif."
-                font="kelsonsans" align="left" position="-1.49907 -0.39766 0.02" color="#CBD5E1"
+                font="kelsonsans" align="left" position="-1.5802 -0.15956 0.01532" color="#CBD5E1"
                 scale="0.72 0.72 0.72" width="4.8"></a-text>
 
         <!-- DEMO: Cube that spins FAST when you gaze at it — your gaze = interaction -->

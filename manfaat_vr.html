@@ -7,6 +7,34 @@
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
 
     <script>
+      // Detect low-end / mobile device
+      window.isLowEndDevice = AFRAME.utils.device.isMobile() || 
+                             (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                             /perf=low/i.test(window.location.search);
+
+      AFRAME.registerComponent('low-end-optimize', {
+        init: function () {
+          var sceneEl = this.el;
+          var isLow = window.isLowEndDevice;
+          var maxRatio = isLow ? 1.0 : 1.35;
+          
+          sceneEl.setAttribute('renderer', {
+            antialias: !isLow,
+            precision: isLow ? 'medium' : 'high',
+            powerPreference: 'high-performance',
+            logarithmicDepthBuffer: false
+          });
+
+          var applyPixelRatio = () => {
+            if (sceneEl.renderer) {
+              sceneEl.renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxRatio));
+            }
+          };
+          if (sceneEl.renderer) { applyPixelRatio(); }
+          else { sceneEl.addEventListener('render-target-loaded', applyPixelRatio); }
+        }
+      });
+
       // Back navigation
       AFRAME.registerComponent('close-tab', {
         init: function () {
@@ -20,8 +48,10 @@
       // Ambient floating particles
       AFRAME.registerComponent('floating-particles', {
         init: function () {
+          var isLow = window.isLowEndDevice;
+          var count = isLow ? 6 : 18;
           const colors = ['#38BDF8', '#34D399', '#FBBF24', '#F472B6', '#A78BFA'];
-          for (let i = 0; i < 55; i++) {
+          for (let i = 0; i < count; i++) {
             let s = document.createElement('a-sphere');
             let x = (Math.random() - 0.5) * 35;
             let y = Math.random() * 9 + 0.5;
@@ -40,7 +70,7 @@
     </script>
   </head>
   <body>
-    <a-scene id="mnf-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+    <a-scene renderer="antialias: false; precision: medium; powerPreference: high-performance" low-end-optimize id="mnf-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
       <!-- Camera: look + WASD walk -->
       <a-entity id="mnf-main-camera" camera look-controls wasd-controls="acceleration: 15" position="0 1.6 0">

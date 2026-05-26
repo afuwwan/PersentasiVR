@@ -8,9 +8,37 @@
   <script src="https://unpkg.com/aframe-environment-component@1.3.3/dist/aframe-environment-component.min.js"></script>
 
   <script>
+    // Detect low-end / mobile device
+    window.isLowEndDevice = AFRAME.utils.device.isMobile() || 
+                           (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                           /perf=low/i.test(window.location.search);
+
+    AFRAME.registerComponent('low-end-optimize', {
+      init: function () {
+        var sceneEl = this.el;
+        var isLow = window.isLowEndDevice;
+        var maxRatio = isLow ? 1.0 : 1.35;
+        
+        sceneEl.setAttribute('renderer', {
+          antialias: !isLow,
+          precision: isLow ? 'medium' : 'high',
+          powerPreference: 'high-performance',
+          logarithmicDepthBuffer: false
+        });
+
+        var applyPixelRatio = () => {
+          if (sceneEl.renderer) {
+            sceneEl.renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxRatio));
+          }
+        };
+        if (sceneEl.renderer) { applyPixelRatio(); }
+        else { sceneEl.addEventListener('render-target-loaded', applyPixelRatio); }
+      }
+    });
+
     // =====================================================
     // COMPONENT: topic-stop
-    // Opens detail page in a NEW TAB (popup-safe anchor trick)
+    // Opens detail page in SAME TAB (no popup blocker issues, saves memory)
     // Saves step progress to localStorage for resume
     // =====================================================
     AFRAME.registerComponent('topic-stop', {
@@ -42,16 +70,11 @@
           this.el.removeAttribute('animation__mouseleave');
           this.el.setAttribute('scale', '1 1 1');
 
-          // Open detail page in a new tab at the midpoint of the walk
-          // Using anchor trick — bypasses popup blockers reliably
+          // Open detail page in the same tab at the midpoint of the walk
+          // This is 100% immune to popup blockers and saves system memory
           if (this.data.url) {
             setTimeout(() => {
-              var a = document.createElement('a');
-              a.href = this.data.url;
-              a.target = '_blank';
-              document.body.appendChild(a);
-              a.click();
-              document.body.removeChild(a);
+              window.location.href = this.data.url;
             }, 1750);
           }
         });
@@ -156,7 +179,9 @@
     // =====================================================
     AFRAME.registerComponent('fireflies', {
       init: function () {
-        for (var i = 0; i < 75; i++) {
+        var isLow = window.isLowEndDevice;
+        var count = isLow ? 20 : 75;
+        for (var i = 0; i < count; i++) {
           var fly = document.createElement('a-sphere');
           fly.setAttribute('id', 'firefly-' + i);
           var x = (Math.random() - 0.5) * 20;
@@ -179,7 +204,9 @@
     // =====================================================
     AFRAME.registerComponent('park-trees', {
       init: function () {
-        for (var i = 0; i < 150; i++) {
+        var isLow = window.isLowEndDevice;
+        var count = isLow ? 40 : 150;
+        for (var i = 0; i < count; i++) {
           var x = (Math.random() - 0.5) * 100;
           var z = (Math.random() - 0.5) * 100;
 
@@ -230,7 +257,7 @@
 </head>
 
 <body>
-  <a-scene id="prs-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable" tour-progress>
+  <a-scene renderer="antialias: false; precision: medium; powerPreference: high-performance" low-end-optimize id="prs-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable" tour-progress>
 
     <!-- ==================== CAMERA ==================== -->
     <a-entity id="prs-camera-rig" rotation="0 0 0" position="0 1 0">

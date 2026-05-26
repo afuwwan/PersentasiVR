@@ -63,6 +63,34 @@
     </style>
 
     <script>
+      // Detect low-end / mobile device
+      window.isLowEndDevice = AFRAME.utils.device.isMobile() || 
+                             (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 4) ||
+                             /perf=low/i.test(window.location.search);
+
+      AFRAME.registerComponent('low-end-optimize', {
+        init: function () {
+          var sceneEl = this.el;
+          var isLow = window.isLowEndDevice;
+          var maxRatio = isLow ? 1.0 : 1.35;
+          
+          sceneEl.setAttribute('renderer', {
+            antialias: !isLow,
+            precision: isLow ? 'medium' : 'high',
+            powerPreference: 'high-performance',
+            logarithmicDepthBuffer: false
+          });
+
+          var applyPixelRatio = () => {
+            if (sceneEl.renderer) {
+              sceneEl.renderer.setPixelRatio(Math.min(window.devicePixelRatio, maxRatio));
+            }
+          };
+          if (sceneEl.renderer) { applyPixelRatio(); }
+          else { sceneEl.addEventListener('render-target-loaded', applyPixelRatio); }
+        }
+      });
+
       // Back navigation
       AFRAME.registerComponent('close-tab', {
         init: function () {
@@ -76,8 +104,10 @@
       // Ambient floating particles
       AFRAME.registerComponent('floating-particles', {
         init: function () {
+          var isLow = window.isLowEndDevice;
+          var count = isLow ? 6 : 18;
           const colors = ['#0EA5E9', '#38BDF8', '#7DD3FC', '#0D9488', '#2DD4BF'];
-          for (let i = 0; i < 45; i++) {
+          for (let i = 0; i < count; i++) {
             let s = document.createElement('a-sphere');
             let x = (Math.random() - 0.5) * 35;
             let y = Math.random() * 9 + 0.5;
@@ -112,7 +142,7 @@
     </script>
   </head>
   <body>
-    <a-scene id="ind-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+    <a-scene renderer="antialias: false; precision: medium; powerPreference: high-performance" low-end-optimize id="ind-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
       <a-assets>
         <img id="ind-yt-thumb" src="img/industri_yt_thumb.jpg">
