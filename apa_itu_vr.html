@@ -230,7 +230,7 @@
       </a-entity>
 
       <!-- BACK BUTTON -->
-      <a-entity id="btn-back" rotation="0 42 0" position="-3.02 0.732 -3.03" class="clickable" close-tab
+      <a-entity id="btn-back" rotation="0 42 0" position="-3 0.72442 -3.05423" class="clickable" close-tab
                 geometry="primitive: plane; width: 1.6; height: 0.42"
                 material="transparent: true; opacity: 0"
                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
@@ -245,11 +245,11 @@
 
       <!-- ========== INTERACTIVE BALLS (Coba Tatap!) ========== -->
       <!-- These balls react to gaze: bounce + change color to show VR responds to user -->
-      <a-entity id="interact-zone" position="3.02038 0 -2.10035">
+      <a-entity id="interact-zone" rotation="0 -40.529315554169045 0" position="2.03486 0 -0.8302">
 
         <!-- Instruction hint floating near start -->
-        <a-text id="interact-hint" rotation="18.790723849110478 0 0" value="Gunakan W A S D untuk berjalan\nTatap bola untuk berinteraksi!" 
-          position="-2.00519 2.73892 -2.02527" color="#38BDF8" scale="0.55 0.55 0.55" align="center" font="kelsonsans"
+        <a-text id="interact-hint" rotation="18.790723849110478 7.339589355625845 0" value="Gunakan W A S D untuk berjalan\nTatap bola untuk berinteraksi!" 
+          position="-1.27534 2.18286 -0.18998" color="#38BDF8" scale="0.55 0.55 0.55" align="center" font="kelsonsans"
           animation="property: material.opacity; from: 1; to: 0; delay: 8000; dur: 1500"></a-text>
 
         <!-- Ball 1 -->
