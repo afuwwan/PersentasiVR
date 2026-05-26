@@ -21,7 +21,7 @@
 
       AFRAME.registerComponent('grid-drawer', {
         init: function () {
-          var canvas = document.getElementById('grid-texture');
+          var canvas = document.getElementById('aiv-grid-texture');
           var ctx = canvas.getContext('2d');
           
           // Draw black background
@@ -152,15 +152,15 @@
     </script>
   </head>
   <body>
-    <a-scene id="main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+    <a-scene id="aiv-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
       
       <a-assets>
-        <canvas id="grid-texture" width="128" height="128"></canvas>
+        <canvas id="aiv-grid-texture" width="128" height="128"></canvas>
       </a-assets>
 
       <!-- Camera with look + WASD movement so user can walk around -->
-      <a-entity id="main-camera" camera position="0 1.6 0" look-controls wasd-controls="acceleration: 15">
-        <a-entity id="camera-cursor" cursor="fuse: true; fuseTimeout: 2000"
+      <a-entity id="aiv-main-camera" camera position="0 1.6 0" look-controls wasd-controls="acceleration: 15">
+        <a-entity id="aiv-camera-cursor" cursor="fuse: true; fuseTimeout: 2000"
                   position="0 0 -1"
                   geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.018"
                   material="color: #00FFFF; shader: flat; opacity: 0.8"
@@ -172,137 +172,137 @@
       </a-entity>
 
       <!-- ENVIRONMENT -->
-      <a-sky id="env-sky" color="#000814"></a-sky>
+      <a-sky id="aiv-env-sky" color="#000814"></a-sky>
       <!-- Ground plane -->
-      <a-plane id="env-ground" position="0 0 0" rotation="-90 0 0" width="100" height="100" material="color: #000814; transparent: true"></a-plane>
+      <a-plane id="aiv-env-ground" position="0 0 0" rotation="-90 0 0" width="100" height="100" material="color: #000814; transparent: true"></a-plane>
       <!-- Grid overlay on ground -->
-      <a-plane id="env-grid" position="0 0.01 0" rotation="-90 0 0" width="100" height="100" 
+      <a-plane id="aiv-env-grid" position="0 0.01 0" rotation="-90 0 0" width="100" height="100" 
                material="src: #grid-texture; repeat: 40 40; transparent: true; opacity: 0.35" grid-drawer></a-plane>
 
       <!-- FLOATING RINGS (Torus Decorations) -->
-      <a-entity id="torus-1" position="-6 3 -10" rotation="30 0 0" 
+      <a-entity id="aiv-torus-1" position="-6 3 -10" rotation="30 0 0" 
                 geometry="primitive: torus; radius: 2; radiusTubular: 0.02"
                 material="color: #00FFFF; transparent: true; opacity: 0.3; shader: flat"
                 animation="property: rotation; to: 30 360 0; loop: true; dur: 12000; easing: linear"></a-entity>
 
-      <a-entity id="torus-2" position="6 4 -12" rotation="0 30 0"
+      <a-entity id="aiv-torus-2" position="6 4 -12" rotation="0 30 0"
                 geometry="primitive: torus; radius: 2.5; radiusTubular: 0.02"
                 material="color: #0EA5E9; transparent: true; opacity: 0.2; shader: flat"
                 animation="property: rotation; to: 360 30 0; loop: true; dur: 18000; easing: linear"></a-entity>
 
-      <a-entity id="torus-3" position="0 7 -15" rotation="60 0 30"
+      <a-entity id="aiv-torus-3" position="0 7 -15" rotation="60 0 30"
                 geometry="primitive: torus; radius: 4; radiusTubular: 0.02"
                 material="color: #38BDF8; transparent: true; opacity: 0.15; shader: flat"
                 animation="property: rotation; to: 60 360 30; loop: true; dur: 25000; easing: linear"></a-entity>
 
       <!-- FLOATING PARTICLES (Spheres) -->
-      <a-entity id="particles-system" floating-particles></a-entity>
+      <a-entity id="aiv-particles-system" floating-particles></a-entity>
 
       <!-- MAIN CONTENT PANEL -->
-      <a-entity id="main-panel" rotation="9.80617266366404 41.23577251556535 0.868604017418328" position="-2.83596 1.74418 -2.8477" 
+      <a-entity id="aiv-main-panel" rotation="9.80617266366404 41.23577251556535 0.868604017418328" position="-2.83596 1.74418 -2.8477" 
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 800; easing: easeOutBack">
         
         <!-- Background plane with opacity animation -->
-        <a-plane id="panel-bg" position="0 0.7212 0" scale="0.90427 0.66032 1" width="5.5" height="4.0" color="#000814" 
+        <a-plane id="aiv-panel-bg" position="0 0.7212 0" scale="0.90427 0.66032 1" width="5.5" height="4.0" color="#000814" 
                  material="transparent: true; shader: flat"
                  animation="property: material.opacity; from: 0; to: 0.75; dur: 800; easing: easeOutBack"></a-plane>
 
         <!-- Left Border Accent -->
-        <a-box id="panel-border" rotation="-31.79285509401425 0 0" position="-2.87773 -4.51604 0.83124" width="0.006" height="4.0" depth="0.001" color="#00FFFF" material="shader: flat; opacity: 0.6"></a-box>
+        <a-box id="aiv-panel-border" rotation="-31.79285509401425 0 0" position="-2.87773 -4.51604 0.83124" width="0.006" height="4.0" depth="0.001" color="#00FFFF" material="shader: flat; opacity: 0.6"></a-box>
 
         <!-- Cyan top label -->
-        <a-text id="panel-label" value="VIRTUAL REALITY" position="0 1.6 0.05" color="#00FFFF" scale="0.55 0.55 0.55" align="center" letterSpacing="8" font="kelsonsans"></a-text>
+        <a-text id="aiv-panel-label" value="VIRTUAL REALITY" position="0 1.6 0.05" color="#00FFFF" scale="0.55 0.55 0.55" align="center" letterSpacing="8" font="kelsonsans"></a-text>
 
         <!-- Main title -->
-        <a-text id="panel-title" value="Apa itu VR?" position="0 1.1 0.05" color="#FFFFFF" scale="1.8 1.8 1.8" align="center" font="kelsonsans"></a-text>
+        <a-text id="aiv-panel-title" value="Apa itu VR?" position="0 1.1 0.05" color="#FFFFFF" scale="1.8 1.8 1.8" align="center" font="kelsonsans"></a-text>
 
         <!-- Thin cyan divider line -->
-        <a-box id="panel-divider" scale="2.7212 1 1" position="0 -1.44014 0.05" width="0.8" height="0.008" depth="0.001" color="#00FFFF" material="shader: flat; opacity: 0.6"></a-box>
+        <a-box id="aiv-panel-divider" scale="2.7212 1 1" position="0 -1.44014 0.05" width="0.8" height="0.008" depth="0.001" color="#00FFFF" material="shader: flat; opacity: 0.6"></a-box>
 
         <!-- Quote -->
-        <a-text id="panel-quote" value="Dunia alternatif yang diisi dengan gambar yang dihasilkan oleh komputer, yang merespond pergerakan manusia." position="0 0.3 0.05" color="#E2E8F0" scale="0.65 0.65 0.65" width="5" align="center" lineHeight="65" font="kelsonsans"></a-text>
+        <a-text id="aiv-panel-quote" value="Dunia alternatif yang diisi dengan gambar yang dihasilkan oleh komputer, yang merespond pergerakan manusia." position="0 0.3 0.05" color="#E2E8F0" scale="0.65 0.65 0.65" width="5" align="center" lineHeight="65" font="kelsonsans"></a-text>
 
         <!-- Citation -->
-        <a-text id="panel-citation" value="- Greenbaum, 1992" position="0 -0.17501 0.05" color="#00FFFF" scale="0.5 0.5 0.5" align="center" font="kelsonsans"></a-text>
+        <a-text id="aiv-panel-citation" value="- Greenbaum, 1992" position="0 -0.17501 0.05" color="#00FFFF" scale="0.5 0.5 0.5" align="center" font="kelsonsans"></a-text>
 
         <!-- Description -->
-        <a-text id="panel-desc" value="Di dalam dunia digital ini terdapat objek-objek yang dapat kita interaksikan - mengubah ukuran, posisi, dan propertinya secara real-time." position="-0.03604 -3.22664 0.46083" color="#94A3B8" scale="0.55 0.55 0.55" width="5" align="center" lineHeight="60" font="kelsonsans"></a-text>
+        <a-text id="aiv-panel-desc" value="Di dalam dunia digital ini terdapat objek-objek yang dapat kita interaksikan - mengubah ukuran, posisi, dan propertinya secara real-time." position="-0.03604 -3.22664 0.46083" color="#94A3B8" scale="0.55 0.55 0.55" width="5" align="center" lineHeight="60" font="kelsonsans"></a-text>
       </a-entity>
 
       <!-- BACK BUTTON -->
-      <a-entity id="btn-back" rotation="0 42 0" position="-3 0.72442 -3.05423" class="clickable" close-tab
+      <a-entity id="aiv-btn-back" rotation="0 42 0" position="-3 0.72442 -3.05423" class="clickable" close-tab
                 geometry="primitive: plane; width: 1.6; height: 0.42"
                 material="transparent: true; opacity: 0"
                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
         <!-- Background -->
-        <a-plane id="btn-back-bg" width="1.6" height="0.42" color="#000814" material="transparent: true; opacity: 0.8; shader: flat" position="0 0 -0.001"></a-plane>
+        <a-plane id="aiv-btn-back-bg" width="1.6" height="0.42" color="#000814" material="transparent: true; opacity: 0.8; shader: flat" position="0 0 -0.001"></a-plane>
         <!-- Border effect (slightly larger behind) -->
-        <a-plane id="btn-back-border" width="1.62" height="0.44" color="#00FFFF" position="0 0 -0.005" opacity="0.5" material="shader: flat"></a-plane>
+        <a-plane id="aiv-btn-back-border" width="1.62" height="0.44" color="#00FFFF" position="0 0 -0.005" opacity="0.5" material="shader: flat"></a-plane>
         <!-- Text -->
-        <a-text id="btn-back-text" value="KEMBALI" color="#00FFFF" scale="0.6 0.6 0.6" align="center" position="0 0 0.02" font="kelsonsans"></a-text>
+        <a-text id="aiv-btn-back-text" value="KEMBALI" color="#00FFFF" scale="0.6 0.6 0.6" align="center" position="0 0 0.02" font="kelsonsans"></a-text>
       </a-entity>
 
       <!-- ========== INTERACTIVE BALLS (Coba Tatap!) ========== -->
       <!-- These balls react to gaze: bounce + change color to show VR responds to user -->
-      <a-entity id="interact-zone" rotation="0 -40.529315554169045 0" position="2.03486 0 -0.8302">
+      <a-entity id="aiv-interact-zone" rotation="0 -40.529315554169045 0" position="2.03486 0 -0.8302">
 
         <!-- Instruction hint floating near start -->
-        <a-text id="interact-hint" rotation="18.790723849110478 7.339589355625845 0" value="Gunakan W A S D untuk berjalan\nTatap bola untuk berinteraksi!" 
+        <a-text id="aiv-interact-hint" rotation="18.790723849110478 7.339589355625845 0" value="Gunakan W A S D untuk berjalan\nTatap bola untuk berinteraksi!" 
           position="-1.27534 2.18286 -0.18998" color="#38BDF8" scale="0.55 0.55 0.55" align="center" font="kelsonsans"
           animation="property: material.opacity; from: 1; to: 0; delay: 8000; dur: 1500"></a-text>
 
         <!-- Ball 1 -->
-        <a-sphere id="rball-1" class="clickable" position="-2 0.4 -4" radius="0.35" 
+        <a-sphere id="aiv-rball-1" class="clickable" position="-2 0.4 -4" radius="0.35" 
           color="#FF6B6B" material="shader: flat" react-ball="originalColor: #FF6B6B"
           animation__idle="property: position; to: -2 0.55 -4; dur: 2200; dir: alternate; loop: true; easing: easeInOutSine">
           <a-text class="react-label" visible="false" value="Boing!" position="0 0.6 0" color="#FFFFFF" scale="0.8 0.8 0.8" align="center" font="kelsonsans"></a-text>
         </a-sphere>
 
         <!-- Ball 2 -->
-        <a-sphere id="rball-2" class="clickable" position="2.5 0.4 -5" radius="0.3"
+        <a-sphere id="aiv-rball-2" class="clickable" position="2.5 0.4 -5" radius="0.3"
           color="#38BDF8" material="shader: flat" react-ball="originalColor: #38BDF8"
           animation__idle="property: position; to: 2.5 0.6 -5; dur: 2600; dir: alternate; loop: true; easing: easeInOutSine">
           <a-text class="react-label" visible="false" value="Wow!" position="0 0.55 0" color="#FFFFFF" scale="0.8 0.8 0.8" align="center" font="kelsonsans"></a-text>
         </a-sphere>
 
         <!-- Ball 3 -->
-        <a-sphere id="rball-3" class="clickable" position="-1 0.3 -7" radius="0.25"
+        <a-sphere id="aiv-rball-3" class="clickable" position="-1 0.3 -7" radius="0.25"
           color="#A78BFA" material="shader: flat" react-ball="originalColor: #A78BFA"
           animation__idle="property: position; to: -1 0.5 -7; dur: 1900; dir: alternate; loop: true; easing: easeInOutSine">
           <a-text class="react-label" visible="false" value="Halo!" position="0 0.5 0" color="#FFFFFF" scale="0.8 0.8 0.8" align="center" font="kelsonsans"></a-text>
         </a-sphere>
 
         <!-- Ball 4 -->
-        <a-sphere id="rball-4" class="clickable" position="1.5 0.35 -3" radius="0.32"
+        <a-sphere id="aiv-rball-4" class="clickable" position="1.5 0.35 -3" radius="0.32"
           color="#34D399" material="shader: flat" react-ball="originalColor: #34D399"
           animation__idle="property: position; to: 1.5 0.55 -3; dur: 2400; dir: alternate; loop: true; easing: easeInOutSine">
           <a-text class="react-label" visible="false" value="Interaktif!" position="0 0.55 0" color="#FFFFFF" scale="0.7 0.7 0.7" align="center" font="kelsonsans"></a-text>
         </a-sphere>
 
         <!-- Ball 5 -->
-        <a-sphere id="rball-5" class="clickable" position="-3.5 0.4 -6" radius="0.28"
+        <a-sphere id="aiv-rball-5" class="clickable" position="-3.5 0.4 -6" radius="0.28"
           color="#FBBF24" material="shader: flat" react-ball="originalColor: #FBBF24"
           animation__idle="property: position; to: -3.5 0.55 -6; dur: 2100; dir: alternate; loop: true; easing: easeInOutSine">
           <a-text class="react-label" visible="false" value="Yeay!" position="0 0.5 0" color="#FFFFFF" scale="0.8 0.8 0.8" align="center" font="kelsonsans"></a-text>
         </a-sphere>
 
         <!-- Ball 6 -->
-        <a-sphere id="rball-6" class="clickable" position="3 0.3 -8" radius="0.38"
+        <a-sphere id="aiv-rball-6" class="clickable" position="3 0.3 -8" radius="0.38"
           color="#F472B6" material="shader: flat" react-ball="originalColor: #F472B6"
           animation__idle="property: position; to: 3 0.5 -8; dur: 2800; dir: alternate; loop: true; easing: easeInOutSine">
           <a-text class="react-label" visible="false" value="Responsif!" position="0 0.6 0" color="#FFFFFF" scale="0.7 0.7 0.7" align="center" font="kelsonsans"></a-text>
         </a-sphere>
 
         <!-- Ball 7 -->
-        <a-sphere id="rball-7" class="clickable" position="0 0.25 -9" radius="0.22"
+        <a-sphere id="aiv-rball-7" class="clickable" position="0 0.25 -9" radius="0.22"
           color="#818CF8" material="shader: flat" react-ball="originalColor: #818CF8"
           animation__idle="property: position; to: 0 0.45 -9; dur: 2000; dir: alternate; loop: true; easing: easeInOutSine">
           <a-text class="react-label" visible="false" value="VR!" position="0 0.45 0" color="#FFFFFF" scale="0.8 0.8 0.8" align="center" font="kelsonsans"></a-text>
         </a-sphere>
 
         <!-- Ball 8 -->
-        <a-sphere id="rball-8" class="clickable" position="-2.5 0.45 -2.5" radius="0.4"
+        <a-sphere id="aiv-rball-8" class="clickable" position="-2.5 0.45 -2.5" radius="0.4"
           color="#00FFFF" material="shader: flat" react-ball="originalColor: #00FFFF"
           animation__idle="property: position; to: -2.5 0.65 -2.5; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
           <a-text class="react-label" visible="false" value="Dunia VR!" position="0 0.65 0" color="#FFFFFF" scale="0.7 0.7 0.7" align="center" font="kelsonsans"></a-text>

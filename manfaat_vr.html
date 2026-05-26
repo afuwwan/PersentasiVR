@@ -4,55 +4,47 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manfaat VR</title>
-    <!-- Import A-Frame library -->
     <script src="https://aframe.io/releases/1.7.1/aframe.min.js"></script>
-    
-    <!-- Script untuk Tombol Tutup & Animasi Partikel -->
+
     <script>
+      // Back navigation
       AFRAME.registerComponent('close-tab', {
         init: function () {
           this.el.addEventListener('click', () => {
             this.el.setAttribute('animation__click', 'property: scale; to: 0.95 0.95 0.95; dur: 150');
-            setTimeout(() => {
-              window.location.href = 'presentasi.html';
-            }, 150);
+            setTimeout(() => { window.location.href = 'presentasi.html'; }, 150);
           });
         }
       });
 
-      // Komponen partikel mengambang untuk aksen bercahaya
+      // Ambient floating particles
       AFRAME.registerComponent('floating-particles', {
         init: function () {
-          for (let i = 0; i < 40; i++) {
-            let sphere = document.createElement('a-sphere');
-            let x = (Math.random() - 0.5) * 30;
-            let y = Math.random() * 8 + 0.5;
-            let z = (Math.random() - 0.5) * 15 - 3;
-            sphere.setAttribute('position', `${x} ${y} ${z}`);
-            sphere.setAttribute('radius', Math.random() * 0.04 + 0.01);
-            
-            // Randomly assign teal or cyan colors to particles
-            let isTeal = Math.random() > 0.5;
-            let color = isTeal ? '#0ea5e9' : '#10b981';
-            
-            sphere.setAttribute('material', `color: ${color}; transparent: true; opacity: 0.5; shader: flat`);
-            
+          const colors = ['#38BDF8', '#34D399', '#FBBF24', '#F472B6', '#A78BFA'];
+          for (let i = 0; i < 55; i++) {
+            let s = document.createElement('a-sphere');
+            let x = (Math.random() - 0.5) * 35;
+            let y = Math.random() * 9 + 0.5;
+            let z = (Math.random() - 0.5) * 20 - 3;
+            s.setAttribute('position', `${x} ${y} ${z}`);
+            s.setAttribute('radius', Math.random() * 0.028 + 0.01);
+            let c = colors[Math.floor(Math.random() * colors.length)];
+            s.setAttribute('material', `color: ${c}; transparent: true; opacity: 0.32; shader: flat`);
             let dur = Math.random() * 4000 + 3000;
-            let toY = y + (Math.random() * 1.5 + 0.5);
-            sphere.setAttribute('animation', `property: position; to: ${x} ${toY} ${z}; dur: ${dur}; dir: alternate; loop: true; easing: easeInOutSine`);
-            
-            this.el.appendChild(sphere);
+            let toY = y + Math.random() * 1.5 + 0.5;
+            s.setAttribute('animation', `property: position; to: ${x} ${toY} ${z}; dur: ${dur}; dir: alternate; loop: true; easing: easeInOutSine`);
+            this.el.appendChild(s);
           }
         }
       });
     </script>
   </head>
   <body>
-    <a-scene cursor="rayOrigin: mouse" raycaster="objects: .clickable">
-      
-      <!-- Camera -->
-      <a-entity camera look-controls position="0 1.6 0">
-        <a-entity cursor="fuse: true; fuseTimeout: 2000"
+    <a-scene id="mnf-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+
+      <!-- Camera: look + WASD walk -->
+      <a-entity id="mnf-main-camera" camera look-controls wasd-controls="acceleration: 15" position="0 1.6 0">
+        <a-entity id="mnf-camera-cursor" cursor="fuse: true; fuseTimeout: 2000"
                   position="0 0 -1"
                   geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.018"
                   material="color: #38BDF8; shader: flat; opacity: 0.8"
@@ -63,91 +55,162 @@
         </a-entity>
       </a-entity>
 
-      <!-- Lingkungan: Teal-Black & Green-Tinted Ground -->
-      <a-sky color="#020b12"></a-sky>
-      <a-plane color="#071a10" rotation="-90 0 0" width="100" height="100"></a-plane>
-      
-      <!-- Floating Particles (Aksen Bercahaya) -->
-      <a-entity floating-particles></a-entity>
+      <!-- Environment -->
+      <a-sky id="mnf-env-sky" color="#050818"></a-sky>
+      <a-plane id="mnf-env-ground" color="#02030a" rotation="-90 0 0" width="100" height="100" material="shader: flat"></a-plane>
+      <a-plane id="mnf-env-grid" position="0 0.01 0" rotation="-90 0 0" width="100" height="100"
+               material="color: #1e293b; wireframe: true; transparent: true; opacity: 0.2; shader: flat"></a-plane>
 
-      <!-- Header -->
-      <a-text value="MANFAAT VR" font="kelsonsans" align="center" position="0 4.8 -5" color="#FFFFFF" scale="2.5 2.5 2.5" letterSpacing="3"></a-text>
+      <!-- Ambient particles -->
+      <a-entity id="mnf-particles-system" floating-particles></a-entity>
 
-      <!-- 5 BENEFIT CARDS (Baris 1 dan Baris 2) -->
-      
-      <!-- Baris 1: Kartu 1 -->
-      <a-entity position="-3 2.8 -5" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
-        <a-plane color="#0a2218" width="2.5" height="1.4" opacity="0.95" class="clickable"
-                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
-                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-plane color="#0EA5E9" width="2.54" height="1.44" position="0 0 -0.01" opacity="0.4"></a-plane>
-          
-          <a-text value="01" font="kelsonsans" align="left" position="-1.1 0.45 0.02" color="#0EA5E9" scale="1.8 1.8 1.8" opacity="0.8"></a-text>
-          <a-text value="Pengalaman Belajar\nInteraktif" font="kelsonsans" align="left" position="-0.5 0.4 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
-          <a-text value="Memberikan pengalaman belajar yang lebih menarik dan mudah diingat dibanding metode konvensional." font="kelsonsans" align="left" position="-1.1 -0.15 0.02" color="#94A3B8" scale="0.9 0.9 0.9" wrap-count="32"></a-text>
-        </a-plane>
+      <!-- Background rings -->
+      <a-entity id="mnf-bg-rings" position="0 3 -8"
+                animation="property: rotation; to: 360 360 0; loop: true; dur: 48000; easing: linear">
+        <a-torus id="mnf-bg-ring-1" radius="7" radius-tubular="0.012"
+                 material="color: #38BDF8; opacity: 0.10; transparent: true; shader: flat"></a-torus>
+        <a-torus id="mnf-bg-ring-2" radius="7.6" radius-tubular="0.008" rotation="90 0 0"
+                 material="color: #34D399; opacity: 0.07; transparent: true; shader: flat"
+                 animation="property: rotation; to: 90 360 0; loop: true; dur: 30000; easing: linear"></a-torus>
       </a-entity>
 
-      <!-- Baris 1: Kartu 2 -->
-      <a-entity position="0 2.8 -5" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
-        <a-plane color="#0a1828" width="2.5" height="1.4" opacity="0.95" class="clickable"
-                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
-                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-plane color="#0EA5E9" width="2.54" height="1.44" position="0 0 -0.01" opacity="0.4"></a-plane>
-          
-          <a-text value="02" font="kelsonsans" align="left" position="-1.1 0.45 0.02" color="#0EA5E9" scale="1.8 1.8 1.8" opacity="0.8"></a-text>
-          <a-text value="Simulasi Tanpa\nRisiko" font="kelsonsans" align="left" position="-0.5 0.4 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
-          <a-text value="Membantu melatih prosedur berbahaya tanpa risiko nyata bagi pengguna." font="kelsonsans" align="left" position="-1.1 -0.15 0.02" color="#94A3B8" scale="0.9 0.9 0.9" wrap-count="32"></a-text>
-        </a-plane>
+      <!-- Page title (floating, gentle bob) -->
+      <a-text id="mnf-page-title" rotation="16 0 0" value="MANFAAT VR" font="kelsonsans" align="center"
+              position="0 4.9 -5" color="#FFFFFF" scale="2.3 2.3 2.3" letterSpacing="3"
+              animation="property: position; to: 0 4.8 -5; dur: 3400; dir: alternate; loop: true; easing: easeInOutSine">
+      </a-text>
+      <a-text id="mnf-page-subtitle" value="5 Dampak Nyata VR di Berbagai Bidang — Putar kepala untuk menjelajahi" font="kelsonsans"
+              align="center" position="0 4.57 -6.1" color="#38BDF8" scale="0.82 0.82 0.82">
+      </a-text>
+
+      <!-- ============================================================
+           PANEL 1: Pengalaman Belajar  (Far Left)   Accent: #38BDF8
+           ============================================================ -->
+      <a-entity id="mnf-panel1-wrapper" position="-8.03346 2.2 -1.9516" rotation="0 55 0"
+                animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 600; easing: easeOutBack">
+        <a-plane id="mnf-panel1-bg" scale="1.17 1 1" width="3.2" height="2.2" color="#050E18"
+                 material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
+        <a-plane id="mnf-panel1-border" scale="1.165 1 1" width="3.24" height="2.24" color="#38BDF8" position="0 0 -0.008"
+                 material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
+
+        <!-- Ghost number watermark -->
+        <a-text id="mnf-panel1-num" value="01" font="kelsonsans" align="left"
+                position="-1.79 0.76 0.02" color="#38BDF8" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
+        <!-- Title -->
+        <a-text id="mnf-panel1-title" value="Belajar Interaktif" font="kelsonsans" align="left"
+                position="-0.97438 0.75 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <!-- Divider -->
+        <a-box id="mnf-panel1-divider" scale="1.26 1 1" position="0 0.33 0.02" width="2.9" height="0.006" depth="0.001"
+               color="#38BDF8" material="shader: flat; opacity: 0.5"></a-box>
+        <!-- Description -->
+        <a-text id="mnf-panel1-desc"
+                value="Memberikan pengalaman belajar yang jauh lebih mendalam dan mudah diingat. Materi yang biasanya abstrak menjadi nyata dan bisa dijelajahi langsung."
+                font="kelsonsans" align="left" position="-1.73381 -0.35 0.02" color="#CBD5E1"
+                scale="0.72 0.72 0.72" width="4.8"></a-text>
       </a-entity>
 
-      <!-- Baris 1: Kartu 3 -->
-      <a-entity position="3 2.8 -5" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
-        <a-plane color="#0a2218" width="2.5" height="1.4" opacity="0.95" class="clickable"
-                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
-                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-plane color="#0EA5E9" width="2.54" height="1.44" position="0 0 -0.01" opacity="0.4"></a-plane>
-          
-          <a-text value="03" font="kelsonsans" align="left" position="-1.1 0.45 0.02" color="#0EA5E9" scale="1.8 1.8 1.8" opacity="0.8"></a-text>
-          <a-text value="Media Promosi\nMenarik" font="kelsonsans" align="left" position="-0.5 0.4 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
-          <a-text value="Meningkatkan daya tarik presentasi, pameran, dan media promosi secara signifikan." font="kelsonsans" align="left" position="-1.1 -0.15 0.02" color="#94A3B8" scale="0.9 0.9 0.9" wrap-count="32"></a-text>
-        </a-plane>
+      <!-- ============================================================
+           PANEL 2: Simulasi Aman  (Left)   Accent: #34D399 emerald
+           ============================================================ -->
+      <a-entity id="mnf-panel2-wrapper" position="-4.84626 2.2 -4.70257" rotation="0 25 0"
+                animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 700; easing: easeOutBack">
+        <a-plane id="mnf-panel2-bg" scale="1.38135 1 1" width="3.2" height="2.2" color="#04120A"
+                 material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
+        <a-plane id="mnf-panel2-border" scale="1.38138 1 1" width="3.24" height="2.24" color="#34D399" position="0 0 -0.008"
+                 material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
+
+        <a-text id="mnf-panel2-num" value="02" font="kelsonsans" align="left"
+                position="-2.16374 0.82665 0.08052" color="#34D399" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
+        <a-text id="mnf-panel2-title" value="Simulasi Tanpa Risiko" font="kelsonsans" align="left"
+                position="-1.36009 0.8 0.04588" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="mnf-panel2-divider" scale="1.38 1 1" position="0 0.37 0.02" width="2.9" height="0.006" depth="0.001"
+               color="#34D399" material="shader: flat; opacity: 0.5"></a-box>
+        <a-text id="mnf-panel2-desc"
+                value="Melatih prosedur berbahaya — medis, militer, industri berat — tanpa risiko nyata bagi siapapun. Kesalahan dalam VR adalah bagian dari pembelajaran."
+                font="kelsonsans" align="left" position="-1.60833 -0.38 0.02" color="#CBD5E1"
+                scale="0.72 0.72 0.72" width="4.8"></a-text>
       </a-entity>
 
-      <!-- Baris 2: Kartu 4 -->
-      <a-entity position="-1.5 1.1 -5" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
-        <a-plane color="#0a1828" width="2.5" height="1.4" opacity="0.95" class="clickable"
-                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
-                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-plane color="#0EA5E9" width="2.54" height="1.44" position="0 0 -0.01" opacity="0.4"></a-plane>
-          
-          <a-text value="04" font="kelsonsans" align="left" position="-1.1 0.45 0.02" color="#0EA5E9" scale="1.8 1.8 1.8" opacity="0.8"></a-text>
-          <a-text value="Visualisasi\nVirtual" font="kelsonsans" align="left" position="-0.5 0.4 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
-          <a-text value="Mempermudah visualisasi tempat atau objek yang sulit dijangkau secara fisik." font="kelsonsans" align="left" position="-1.1 -0.15 0.02" color="#94A3B8" scale="0.9 0.9 0.9" wrap-count="32"></a-text>
-        </a-plane>
+      <!-- ============================================================
+           PANEL 3: Media Promosi  (Center)   Accent: #F472B6 pink
+           ============================================================ -->
+      <a-entity id="mnf-panel3-wrapper" position="-0.39228 2.2 -5.66" rotation="0 0 0"
+                animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 800; easing: easeOutBack">
+        <a-plane id="mnf-panel3-bg" scale="1.39 1 1" width="3.2" height="2.2" color="#0E0609"
+                 material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
+        <a-plane id="mnf-panel3-border" scale="1.385 1 1" width="3.24" height="2.24" color="#F472B6" position="0 0 -0.008"
+                 material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
+
+        <a-text id="mnf-panel3-num" value="03" font="kelsonsans" align="left"
+                position="-1.94 0.76 0.02" color="#F472B6" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
+        <a-text id="mnf-panel3-title" value="Media Promosi" font="kelsonsans" align="left"
+                position="-0.85 0.78 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="mnf-panel3-divider" scale="1.47 1 1" position="0 0.38 0.02" width="2.9" height="0.006" depth="0.001"
+               color="#F472B6" material="shader: flat; opacity: 0.5"></a-box>
+        <a-text id="mnf-panel3-desc"
+                value="Membawa calon pembeli masuk langsung ke dalam produk — properti, kendaraan, atau destinasi wisata — sebelum keputusan pembelian dibuat."
+                font="kelsonsans" align="left" position="-1.69907 -0.38 0.02" color="#CBD5E1"
+                scale="0.72 0.72 0.72" width="4.8"></a-text>
       </a-entity>
 
-      <!-- Baris 2: Kartu 5 -->
-      <a-entity position="1.5 1.1 -5" scale="0.8 0.8 0.8" animation="property: scale; to: 1 1 1; dur: 600; easing: easeOutBack">
-        <a-plane color="#0a2218" width="2.5" height="1.4" opacity="0.95" class="clickable"
-                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
-                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-plane color="#0EA5E9" width="2.54" height="1.44" position="0 0 -0.01" opacity="0.4"></a-plane>
-          
-          <a-text value="05" font="kelsonsans" align="left" position="-1.1 0.45 0.02" color="#0EA5E9" scale="1.8 1.8 1.8" opacity="0.8"></a-text>
-          <a-text value="Industri Kreatif\n& Teknologi" font="kelsonsans" align="left" position="-0.5 0.4 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
-          <a-text value="Mendukung pengembangan dan inovasi di sektor industri kreatif dan teknologi." font="kelsonsans" align="left" position="-1.1 -0.15 0.02" color="#94A3B8" scale="0.9 0.9 0.9" wrap-count="32"></a-text>
-        </a-plane>
+      <!-- ============================================================
+           PANEL 4: Visualisasi Virtual  (Right)   Accent: #FBBF24 amber
+           ============================================================ -->
+      <a-entity id="mnf-panel4-wrapper" position="3.91 2.2 -4.81487" rotation="0 -25 0"
+                animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 900; easing: easeOutBack">
+        <a-plane id="mnf-panel4-bg" scale="1.25 1 1" width="3.2" height="2.2" color="#0E0B04"
+                 material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
+        <a-plane id="mnf-panel4-border" scale="1.245 1 1" width="3.24" height="2.24" color="#FBBF24" position="0 0 -0.008"
+                 material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
+
+        <a-text id="mnf-panel4-num" value="04" font="kelsonsans" align="left"
+                position="-1.92 0.8 0.02" color="#FBBF24" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
+        <a-text id="mnf-panel4-title" value="Visualisasi Virtual" font="kelsonsans" align="left"
+                position="-0.9 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="mnf-panel4-divider" scale="1.32 1 1" position="0 0.32 0.02" width="2.9" height="0.006" depth="0.001"
+               color="#FBBF24" material="shader: flat; opacity: 0.5"></a-box>
+        <a-text id="mnf-panel4-desc"
+                value="Mempermudah visualisasi tempat atau objek yang mustahil dijangkau secara fisik — luar angkasa, kedalaman laut, atau interior bangunan yang belum dibangun."
+                font="kelsonsans" align="left" position="-1.63365 -0.4 0.02" color="#CBD5E1"
+                scale="0.72 0.72 0.72" width="4.8"></a-text>
       </a-entity>
 
-      <!-- Tombol Kembali / Tutup -->
-      <a-entity position="0 -0.1 -4.5">
-        <a-plane class="clickable" color="#1E293B" width="2" height="0.5" close-tab
-                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
-                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-plane color="#0EA5E9" width="2.03" height="0.53" position="0 0 -0.01"></a-plane>
-          <a-text value="Kembali / Tutup" font="kelsonsans" align="center" position="0 0 0.02" color="#FFFFFF" scale="1.1 1.1 1.1"></a-text>
+      <!-- ============================================================
+           PANEL 5: Industri Kreatif  (Far Right)  Accent: #A78BFA purple
+           ============================================================ -->
+      <a-entity id="mnf-panel5-wrapper" position="6.99538 2.2 -2.20691" rotation="0 -55 0"
+                animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 1000; easing: easeOutBack">
+        <a-plane id="mnf-panel5-bg" scale="1.27 1 1" width="3.2" height="2.2" color="#08060E"
+                 material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
+        <a-plane id="mnf-panel5-border" scale="1.265 1 1" width="3.24" height="2.24" color="#A78BFA" position="0 0 -0.008"
+                 material="shader: flat; transparent: true; opacity: 0.65"
+                 animation="property: material.opacity; from: 0.4; to: 0.9; dur: 1200; loop: true; dir: alternate; easing: easeInOutSine">
         </a-plane>
+
+        <a-text id="mnf-panel5-num" value="05" font="kelsonsans" align="left"
+                position="-1.87 0.76 0.02" color="#A78BFA" scale="2.8 2.8 2.8" opacity="0.18"></a-text>
+        <a-text id="mnf-panel5-title" value="Industri Kreatif" font="kelsonsans" align="left"
+                position="-0.87 0.8 0.02" color="#FFFFFF" scale="1.5 1.5 1.5"></a-text>
+        <a-box id="mnf-panel5-divider" scale="1.38 1 1" position="0 0.37 0.02" width="2.9" height="0.006" depth="0.001"
+               color="#A78BFA" material="shader: flat; opacity: 0.5"></a-box>
+        <a-text id="mnf-panel5-desc"
+                value="Game, film, dan seni interaktif memanfaatkan VR untuk pengalaman yang benar-benar imersif. Penonton bukan lagi sekadar penonton — mereka ada di dalamnya."
+                font="kelsonsans" align="left" position="-1.57396 -0.38 0.02" color="#CBD5E1"
+                scale="0.72 0.72 0.72" width="4.8"></a-text>
+      </a-entity>
+
+      <!-- ==================== BACK BUTTON ==================== -->
+      <a-entity id="mnf-btn-back" position="0 0.4 -2.6" class="clickable" close-tab
+                geometry="primitive: plane; width: 1.8; height: 0.45"
+                material="transparent: true; opacity: 0"
+                animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
+                animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
+        <a-plane id="mnf-btn-back-bg" width="1.8" height="0.45" color="#050E18"
+                 material="transparent: true; opacity: 0.88; shader: flat" position="0 0 -0.001"></a-plane>
+        <a-plane id="mnf-btn-back-border" width="1.82" height="0.47" color="#38BDF8"
+                 position="0 0 -0.005" material="shader: flat; transparent: true; opacity: 0.7"></a-plane>
+        <a-text id="mnf-btn-back-text" value="KEMBALI" color="#38BDF8" scale="0.65 0.65 0.65"
+                align="center" position="0 0 0.02" font="kelsonsans"></a-text>
       </a-entity>
 
     </a-scene>

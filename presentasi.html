@@ -28,7 +28,7 @@
           }
 
           // Walk camera forward on the trail
-          var rig = document.getElementById('camera-rig');
+          var rig = document.getElementById('prs-camera-rig');
           rig.setAttribute('animation__walk', {
             property: 'position',
             to: '0 1 ' + this.data.nextZ,
@@ -115,38 +115,38 @@
         var zPos = 0;
 
         if (visited >= 1) {
-          document.getElementById('step2').setAttribute('visible', 'true');
-          document.getElementById('step2').classList.add('clickable');
-          dimSign('step1');
+          document.getElementById('prs-step2').setAttribute('visible', 'true');
+          document.getElementById('prs-step2').classList.add('clickable');
+          dimSign('prs-step1');
           zPos = -14;
         }
         if (visited >= 2) {
-          document.getElementById('step3').setAttribute('visible', 'true');
-          document.getElementById('step3').classList.add('clickable');
-          dimSign('step2');
+          document.getElementById('prs-step3').setAttribute('visible', 'true');
+          document.getElementById('prs-step3').classList.add('clickable');
+          dimSign('prs-step2');
           zPos = -22;
         }
         if (visited >= 3) {
-          document.getElementById('step4').setAttribute('visible', 'true');
-          document.getElementById('step4').classList.add('clickable');
-          dimSign('step3');
+          document.getElementById('prs-step4').setAttribute('visible', 'true');
+          document.getElementById('prs-step4').classList.add('clickable');
+          dimSign('prs-step3');
           zPos = -30;
         }
         if (visited >= 4) {
-          document.getElementById('step5').setAttribute('visible', 'true');
-          document.getElementById('step5').classList.add('clickable');
-          dimSign('step4');
+          document.getElementById('prs-step5').setAttribute('visible', 'true');
+          document.getElementById('prs-step5').classList.add('clickable');
+          dimSign('prs-step4');
           zPos = -38;
         }
         if (visited >= 5) {
-          document.getElementById('step6').setAttribute('visible', 'true');
-          document.getElementById('step6').classList.add('clickable');
-          dimSign('step5');
+          document.getElementById('prs-step6').setAttribute('visible', 'true');
+          document.getElementById('prs-step6').classList.add('clickable');
+          dimSign('prs-step5');
           zPos = -46;
         }
 
         if (visited > 0) {
-          document.getElementById('camera-rig').setAttribute('position', '0 1 ' + zPos);
+          document.getElementById('prs-camera-rig').setAttribute('position', '0 1 ' + zPos);
         }
       }
     });
@@ -230,12 +230,12 @@
 </head>
 
 <body>
-  <a-scene id="main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable" tour-progress>
+  <a-scene id="prs-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable" tour-progress>
 
     <!-- ==================== CAMERA ==================== -->
-    <a-entity id="camera-rig" rotation="0 179.66294877696737 0" position="0 1 0">
-      <a-entity id="main-camera" camera look-controls position="0 1.6 0">
-        <a-entity id="camera-cursor" cursor="fuse: true; fuseTimeout: 2000" position="0 0 -1"
+    <a-entity id="prs-camera-rig" rotation="0 0 0" position="0 1 0">
+      <a-entity id="prs-main-camera" camera look-controls position="0 1.6 0">
+        <a-entity id="prs-camera-cursor" cursor="fuse: true; fuseTimeout: 2000" position="0 0 -1"
           geometry="primitive: ring; radiusInner: 0.008; radiusOuter: 0.014"
           material="color: #0EA5E9; shader: flat; opacity: 0.8" raycaster="objects: .clickable"
           animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 2000; from: 1 1 1; to: 0.1 0.1 0.1"
@@ -246,8 +246,8 @@
     </a-entity>
 
     <!-- ==================== ENVIRONMENT ==================== -->
-    <a-entity id="fireflies-system" fireflies></a-entity>
-    <a-entity id="forest-environment" environment="
+    <a-entity id="prs-fireflies-system" fireflies></a-entity>
+    <a-entity id="prs-forest-environment" environment="
         preset: forest;
         skyType: atmosphere;
         lighting: point;
@@ -260,144 +260,144 @@
         fog: 0.65;
         dressing: none
       "></a-entity>
-    <a-entity id="custom-trees-system" park-trees></a-entity>
+    <a-entity id="prs-custom-trees-system" park-trees></a-entity>
 
     <!-- ==================== DIRT PATH ==================== -->
-    <a-box id="dirt-path-main" scale="2.05477 1 1" color="#4a3b2c" width="1.4" height="0.06" depth="58" position="0 0.25 -24"
+    <a-box id="prs-dirt-path-main" scale="2.05477 1 1" color="#4a3b2c" width="1.4" height="0.06" depth="58" position="0 0.25 -24"
       material="roughness: 1.0; metalness: 0.0">
     </a-box>
-    <a-box id="dirt-path-edge-left" color="#31261d" width="0.06" height="0.07" depth="58" position="-1.43146 0.26 -24"
+    <a-box id="prs-dirt-path-edge-left" color="#31261d" width="0.06" height="0.07" depth="58" position="-1.43146 0.26 -24"
       material="shader: flat"></a-box>
-    <a-box id="dirt-path-edge-right" color="#31261d" width="0.06" height="0.07" depth="58" position="1.48586 0.26 -24"
+    <a-box id="prs-dirt-path-edge-right" color="#31261d" width="0.06" height="0.07" depth="58" position="1.48586 0.26 -24"
       material="shader: flat"></a-box>
 
     <!-- ==================== SIGNS (Holographic Trail Boards) ==================== -->
 
     <!-- STOP 1 -->
-    <a-entity id="sign1-wrapper" position="0 2.2 -6" rotation="0 0 0">
-      <a-box id="sign1-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
-      <a-box id="sign1-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
-      <a-box id="sign1-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
-      <a-box id="sign1-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
-      <a-entity id="sign1-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
-        <a-plane id="sign1-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
-        <a-plane id="sign1-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
-        <a-plane id="step1" class="clickable" color="#0f172a" width="3" height="1.2"
-          topic-stop="url: apa_itu_vr.html; target: #step2; nextZ: -14; stepIndex: 1"
+    <a-entity id="prs-sign1-wrapper" position="0 2.2 -6" rotation="0 0 0">
+      <a-box id="prs-sign1-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign1-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign1-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign1-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
+      <a-entity id="prs-sign1-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2500; dir: alternate; loop: true; easing: easeInOutSine">
+        <a-plane id="prs-sign1-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
+        <a-plane id="prs-sign1-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
+        <a-plane id="prs-step1" class="clickable" color="#0f172a" width="3" height="1.2"
+          topic-stop="url: apa_itu_vr.html; target: #prs-step2; nextZ: -14; stepIndex: 1"
           material="shader: flat; transparent: true; opacity: 0.95"
           animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
           animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-text id="sign1-num"   value="01"                      font="kelsonsans" align="center" position="-1.1 0 0.01"   color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
-          <a-text id="sign1-title" value="Apa itu VR?"             font="kelsonsans" align="left"   position="-0.75 0.2 0.01" color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
-          <a-text id="sign1-sub"   value="Definisi dan Konsep Dasar" font="kelsonsans" align="left" position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
+          <a-text id="prs-sign1-num"   value="01"                      font="kelsonsans" align="center" position="-1.1 0 0.01"   color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
+          <a-text id="prs-sign1-title" value="Apa itu VR?"             font="kelsonsans" align="left"   position="-0.75 0.2 0.01" color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
+          <a-text id="prs-sign1-sub"   value="Definisi dan Konsep Dasar" font="kelsonsans" align="left" position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
         </a-plane>
       </a-entity>
     </a-entity>
 
     <!-- STOP 2 -->
-    <a-entity id="sign2-wrapper" position="2.2 2.2 -16" rotation="0 -18 0">
-      <a-box id="sign2-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
-      <a-box id="sign2-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
-      <a-box id="sign2-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
-      <a-box id="sign2-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
-      <a-entity id="sign2-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2300; dir: alternate; loop: true; easing: easeInOutSine">
-        <a-plane id="sign2-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
-        <a-plane id="sign2-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
-        <a-plane id="step2" visible="false" color="#0f172a" width="3" height="1.2"
-          topic-stop="url: konsep_dasar_vr.html; target: #step3; nextZ: -22; stepIndex: 2"
+    <a-entity id="prs-sign2-wrapper" position="2.2 2.2 -16" rotation="0 -18 0">
+      <a-box id="prs-sign2-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign2-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign2-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign2-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
+      <a-entity id="prs-sign2-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2300; dir: alternate; loop: true; easing: easeInOutSine">
+        <a-plane id="prs-sign2-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
+        <a-plane id="prs-sign2-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
+        <a-plane id="prs-step2" visible="false" color="#0f172a" width="3" height="1.2"
+          topic-stop="url: konsep_dasar_vr.html; target: #prs-step3; nextZ: -22; stepIndex: 2"
           material="shader: flat; transparent: true; opacity: 0.95"
           animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
           animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-text id="sign2-num"   value="02"                    font="kelsonsans" align="center" position="-1.1 0 0.01"    color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
-          <a-text id="sign2-title" value="Konsep Dasar VR"       font="kelsonsans" align="left"   position="-0.75 0.2 0.01"  color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
-          <a-text id="sign2-sub"   value="4 Elemen Penting VR"   font="kelsonsans" align="left"   position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
+          <a-text id="prs-sign2-num"   value="02"                    font="kelsonsans" align="center" position="-1.1 0 0.01"    color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
+          <a-text id="prs-sign2-title" value="Konsep Dasar VR"       font="kelsonsans" align="left"   position="-0.75 0.2 0.01"  color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
+          <a-text id="prs-sign2-sub"   value="4 Elemen Penting VR"   font="kelsonsans" align="left"   position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
         </a-plane>
       </a-entity>
     </a-entity>
 
     <!-- STOP 3 -->
-    <a-entity id="sign3-wrapper" position="-2.2 2.2 -24" rotation="0 18 0">
-      <a-box id="sign3-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
-      <a-box id="sign3-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
-      <a-box id="sign3-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
-      <a-box id="sign3-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
-      <a-entity id="sign3-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2600; dir: alternate; loop: true; easing: easeInOutSine">
-        <a-plane id="sign3-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
-        <a-plane id="sign3-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
-        <a-plane id="step3" visible="false" color="#0f172a" width="3" height="1.2"
-          topic-stop="url: sejarah_vr.html; target: #step4; nextZ: -30; stepIndex: 3"
+    <a-entity id="prs-sign3-wrapper" position="-2.2 2.2 -24" rotation="0 18 0">
+      <a-box id="prs-sign3-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign3-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign3-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign3-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
+      <a-entity id="prs-sign3-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2600; dir: alternate; loop: true; easing: easeInOutSine">
+        <a-plane id="prs-sign3-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
+        <a-plane id="prs-sign3-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
+        <a-plane id="prs-step3" visible="false" color="#0f172a" width="3" height="1.2"
+          topic-stop="url: sejarah_vr.html; target: #prs-step4; nextZ: -30; stepIndex: 3"
           material="shader: flat; transparent: true; opacity: 0.95"
           animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
           animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-text id="sign3-num"   value="03"                        font="kelsonsans" align="center" position="-1.1 0 0.01"    color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
-          <a-text id="sign3-title" value="Sejarah VR"                font="kelsonsans" align="left"   position="-0.75 0.2 0.01"  color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
-          <a-text id="sign3-sub"   value="Dari 1960 hingga Sekarang" font="kelsonsans" align="left"   position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
+          <a-text id="prs-sign3-num"   value="03"                        font="kelsonsans" align="center" position="-1.1 0 0.01"    color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
+          <a-text id="prs-sign3-title" value="Sejarah VR"                font="kelsonsans" align="left"   position="-0.75 0.2 0.01"  color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
+          <a-text id="prs-sign3-sub"   value="Dari 1960 hingga Sekarang" font="kelsonsans" align="left"   position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
         </a-plane>
       </a-entity>
     </a-entity>
 
     <!-- STOP 4 -->
-    <a-entity id="sign4-wrapper" position="2.2 2.2 -32" rotation="0 -18 0">
-      <a-box id="sign4-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
-      <a-box id="sign4-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
-      <a-box id="sign4-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
-      <a-box id="sign4-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
-      <a-entity id="sign4-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2100; dir: alternate; loop: true; easing: easeInOutSine">
-        <a-plane id="sign4-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
-        <a-plane id="sign4-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
-        <a-plane id="step4" visible="false" color="#0f172a" width="3" height="1.2"
-          topic-stop="url: industri_vr.html; target: #step5; nextZ: -38; stepIndex: 4"
+    <a-entity id="prs-sign4-wrapper" position="2.2 2.2 -32" rotation="0 -18 0">
+      <a-box id="prs-sign4-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign4-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign4-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign4-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
+      <a-entity id="prs-sign4-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2100; dir: alternate; loop: true; easing: easeInOutSine">
+        <a-plane id="prs-sign4-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
+        <a-plane id="prs-sign4-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
+        <a-plane id="prs-step4" visible="false" color="#0f172a" width="3" height="1.2"
+          topic-stop="url: industri_vr.html; target: #prs-step5; nextZ: -38; stepIndex: 4"
           material="shader: flat; transparent: true; opacity: 0.95"
           animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
           animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-text id="sign4-num"   value="04"                             font="kelsonsans" align="center" position="-1.1 0 0.01"    color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
-          <a-text id="sign4-title" value="VR &amp; Industri 4.0"         font="kelsonsans" align="left"   position="-0.75 0.2 0.01"  color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
-          <a-text id="sign4-sub"   value="Keterkaitan dan Peran Strategis" font="kelsonsans" align="left" position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
+          <a-text id="prs-sign4-num"   value="04"                             font="kelsonsans" align="center" position="-1.1 0 0.01"    color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
+          <a-text id="prs-sign4-title" value="VR &amp; Industri 4.0"         font="kelsonsans" align="left"   position="-0.75 0.2 0.01"  color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
+          <a-text id="prs-sign4-sub"   value="Keterkaitan dan Peran Strategis" font="kelsonsans" align="left" position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
         </a-plane>
       </a-entity>
     </a-entity>
 
     <!-- STOP 5 -->
-    <a-entity id="sign5-wrapper" position="-2.2 2.2 -40" rotation="0 18 0">
-      <a-box id="sign5-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
-      <a-box id="sign5-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
-      <a-box id="sign5-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
-      <a-box id="sign5-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
-      <a-entity id="sign5-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2400; dir: alternate; loop: true; easing: easeInOutSine">
-        <a-plane id="sign5-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
-        <a-plane id="sign5-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
-        <a-plane id="step5" visible="false" color="#0f172a" width="3" height="1.2"
-          topic-stop="url: manfaat_vr.html; target: #step6; nextZ: -46; stepIndex: 5"
+    <a-entity id="prs-sign5-wrapper" position="-2.2 2.2 -40" rotation="0 18 0">
+      <a-box id="prs-sign5-post-l" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="-1.7 -1.0 0" material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign5-post-r" color="#2c1a14" width="0.12" height="3.5" depth="0.12" position="1.7 -1.0 0"  material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign5-beam-t" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 0.8 0"   material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign5-beam-b" color="#2c1a14" width="3.8" height="0.12" depth="0.12" position="0 -0.8 0"  material="roughness: 1.0"></a-box>
+      <a-entity id="prs-sign5-screen-grp" animation="property: position; to: 0 0.05 0; dur: 2400; dir: alternate; loop: true; easing: easeInOutSine">
+        <a-plane id="prs-sign5-glass"  color="#020617" width="3.15" height="1.35" position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
+        <a-plane id="prs-sign5-border" color="#0EA5E9" width="3.06" height="1.26" position="0 0 -0.012" material="shader: flat; opacity: 0.85"></a-plane>
+        <a-plane id="prs-step5" visible="false" color="#0f172a" width="3" height="1.2"
+          topic-stop="url: manfaat_vr.html; target: #prs-step6; nextZ: -46; stepIndex: 5"
           material="shader: flat; transparent: true; opacity: 0.95"
           animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
           animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-text id="sign5-num"   value="05"                font="kelsonsans" align="center" position="-1.1 0 0.01"    color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
-          <a-text id="sign5-title" value="Manfaat VR"        font="kelsonsans" align="left"   position="-0.75 0.2 0.01"  color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
-          <a-text id="sign5-sub"   value="Dampak di Dunia Nyata" font="kelsonsans" align="left" position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
+          <a-text id="prs-sign5-num"   value="05"                font="kelsonsans" align="center" position="-1.1 0 0.01"    color="#0EA5E9" scale="2.2 2.2 2.2" opacity="0.15"></a-text>
+          <a-text id="prs-sign5-title" value="Manfaat VR"        font="kelsonsans" align="left"   position="-0.75 0.2 0.01"  color="#FFFFFF" scale="1.2 1.2 1.2" width="3.5"></a-text>
+          <a-text id="prs-sign5-sub"   value="Dampak di Dunia Nyata" font="kelsonsans" align="left" position="-0.75 -0.18 0.01" color="#94A3B8" scale="0.8 0.8 0.8" width="4"></a-text>
         </a-plane>
       </a-entity>
     </a-entity>
 
     <!-- STOP 6 (FINAL) -->
-    <a-entity id="sign6-wrapper" position="0 2.4 -48" rotation="0 0 0">
-      <a-box id="sign6-post-l" color="#2c1a14" width="0.15" height="4.0" depth="0.15" position="-2.0 -1.2 0" material="roughness: 1.0"></a-box>
-      <a-box id="sign6-post-r" color="#2c1a14" width="0.15" height="4.0" depth="0.15" position="2.0 -1.2 0"  material="roughness: 1.0"></a-box>
-      <a-box id="sign6-beam-t" color="#2c1a14" width="4.4" height="0.15" depth="0.15" position="0 1.2 0"  material="roughness: 1.0"></a-box>
-      <a-box id="sign6-beam-b" color="#2c1a14" width="4.4" height="0.15" depth="0.15" position="0 -1.2 0" material="roughness: 1.0"></a-box>
-      <a-entity id="sign6-screen-grp" animation="property: position; to: 0 0.08 0; dur: 2200; dir: alternate; loop: true; easing: easeInOutSine">
-        <a-plane id="sign6-glass"  color="#020617" width="3.7"  height="2.2"  position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
-        <a-plane id="sign6-border" color="#38BDF8" width="3.62" height="2.12" position="0 0 -0.012"
+    <a-entity id="prs-sign6-wrapper" position="0 2.4 -48" rotation="0 0 0">
+      <a-box id="prs-sign6-post-l" color="#2c1a14" width="0.15" height="4.0" depth="0.15" position="-2.0 -1.2 0" material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign6-post-r" color="#2c1a14" width="0.15" height="4.0" depth="0.15" position="2.0 -1.2 0"  material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign6-beam-t" color="#2c1a14" width="4.4" height="0.15" depth="0.15" position="0 1.2 0"  material="roughness: 1.0"></a-box>
+      <a-box id="prs-sign6-beam-b" color="#2c1a14" width="4.4" height="0.15" depth="0.15" position="0 -1.2 0" material="roughness: 1.0"></a-box>
+      <a-entity id="prs-sign6-screen-grp" animation="property: position; to: 0 0.08 0; dur: 2200; dir: alternate; loop: true; easing: easeInOutSine">
+        <a-plane id="prs-sign6-glass"  color="#020617" width="3.7"  height="2.2"  position="0 0 -0.02"  material="transparent: true; opacity: 0.4"></a-plane>
+        <a-plane id="prs-sign6-border" color="#38BDF8" width="3.62" height="2.12" position="0 0 -0.012"
           material="shader: flat; transparent: true; opacity: 0.9"
           animation="property: material.opacity; from: 0.4; to: 1.0; dur: 1200; loop: true; dir: alternate; easing: easeInOutSine"></a-plane>
-        <a-plane id="step6" visible="false" color="#0c2a4a" width="3.5" height="2.0"
+        <a-plane id="prs-step6" visible="false" color="#0c2a4a" width="3.5" height="2.0"
           open-link="url: https://afuwwan.github.io/VRTour/"
           material="shader: flat; transparent: true; opacity: 0.95"
           animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
           animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-          <a-text id="sign6-title"      value="VR TOUR"                 font="kelsonsans" align="center" position="0 0.55 0.01"  color="#38BDF8" scale="1.4 1.4 1.4" letterSpacing="6"></a-text>
-          <a-text id="sign6-sub1"       value="Akses Virtual Tour"       font="kelsonsans" align="center" position="0 0.15 0.01"  color="#FFFFFF"  scale="1.4 1.4 1.4" width="4"></a-text>
-          <a-text id="sign6-link"       value="afuwwan.github.io/VRTour" font="kelsonsans" align="center" position="0 -0.25 0.01" color="#7DD3FC"  scale="0.8 0.8 0.8" width="4.5"></a-text>
-          <a-text id="sign6-click-hint" value="Tatap untuk Membuka"      font="kelsonsans" align="center" position="0 -0.62 0.01" color="#94A3B8"  scale="0.75 0.75 0.75"></a-text>
+          <a-text id="prs-sign6-title"      value="VR TOUR"                 font="kelsonsans" align="center" position="0 0.55 0.01"  color="#38BDF8" scale="1.4 1.4 1.4" letterSpacing="6"></a-text>
+          <a-text id="prs-sign6-sub1"       value="Akses Virtual Tour"       font="kelsonsans" align="center" position="0 0.15 0.01"  color="#FFFFFF"  scale="1.4 1.4 1.4" width="4"></a-text>
+          <a-text id="prs-sign6-link"       value="afuwwan.github.io/VRTour" font="kelsonsans" align="center" position="0 -0.25 0.01" color="#7DD3FC"  scale="0.8 0.8 0.8" width="4.5"></a-text>
+          <a-text id="prs-sign6-click-hint" value="Tatap untuk Membuka"      font="kelsonsans" align="center" position="0 -0.62 0.01" color="#94A3B8"  scale="0.75 0.75 0.75"></a-text>
         </a-plane>
       </a-entity>
     </a-entity>

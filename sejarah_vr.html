@@ -39,19 +39,19 @@
     </script>
   </head>
   <body>
-    <a-scene id="main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
+    <a-scene id="sjr-main-scene" cursor="rayOrigin: mouse" raycaster="objects: .clickable">
 
       <a-assets>
-        <img id="img-sensorama"      src="img/sensorama.png">
-        <img id="img-telesphere"     src="img/telesphere.png">
-        <img id="img-damocles"       src="img/sword_of_damocles.png">
-        <img id="img-sega"           src="img/sega_vr.png">
-        <img id="img-metaquest"      src="img/meta_quest.png">
+        <img id="sjr-img-sensorama"      src="img/sensorama.png">
+        <img id="sjr-img-telesphere"     src="img/telesphere.png">
+        <img id="sjr-img-damocles"       src="img/sword_of_damocles.png">
+        <img id="sjr-img-sega"           src="img/sega_vr.png">
+        <img id="sjr-img-metaquest"      src="img/meta_quest.png">
       </a-assets>
 
       <!-- Camera with WASD -->
-      <a-entity id="main-camera" camera look-controls wasd-controls="acceleration: 15" position="0 1.6 0">
-        <a-entity id="camera-cursor" cursor="fuse: true; fuseTimeout: 2000"
+      <a-entity id="sjr-main-camera" camera look-controls wasd-controls="acceleration: 15" position="0 1.6 0">
+        <a-entity id="sjr-camera-cursor" cursor="fuse: true; fuseTimeout: 2000"
                   position="0 0 -1"
                   geometry="primitive: ring; radiusInner: 0.015; radiusOuter: 0.018"
                   material="color: #F59E0B; shader: flat; opacity: 0.8"
@@ -63,216 +63,216 @@
       </a-entity>
 
       <!-- Environment -->
-      <a-sky id="env-sky" color="#07040E"></a-sky>
-      <a-plane id="env-ground" color="#05030A" rotation="-90 0 0" width="100" height="100" material="shader: flat"></a-plane>
-      <a-plane id="env-grid" position="0 0.01 0" rotation="-90 0 0" width="100" height="100"
+      <a-sky id="sjr-env-sky" color="#07040E"></a-sky>
+      <a-plane id="sjr-env-ground" color="#05030A" rotation="-90 0 0" width="100" height="100" material="shader: flat"></a-plane>
+      <a-plane id="sjr-env-grid" position="0 0.01 0" rotation="-90 0 0" width="100" height="100"
                material="color: #1a1025; wireframe: true; transparent: true; opacity: 0.2; shader: flat"></a-plane>
 
       <!-- Ambient particles -->
-      <a-entity id="particles-system" floating-particles></a-entity>
+      <a-entity id="sjr-particles-system" floating-particles></a-entity>
 
       <!-- Large background torus rings -->
-      <a-entity id="bg-ring-wrap" position="0 3 -8"
+      <a-entity id="sjr-bg-ring-wrap" position="0 3.02117 -8"
                 animation="property: rotation; to: 360 360 0; loop: true; dur: 50000; easing: linear">
-        <a-torus id="bg-ring-1" radius="7" radius-tubular="0.012"
+        <a-torus id="sjr-bg-ring-1" radius="7" radius-tubular="0.012"
                  material="color: #F59E0B; opacity: 0.08; transparent: true; shader: flat"></a-torus>
-        <a-torus id="bg-ring-2" radius="7.6" radius-tubular="0.008" rotation="90 0 0"
+        <a-torus id="sjr-bg-ring-2" radius="7.6" radius-tubular="0.008" rotation="90 0 0"
                  material="color: #A78BFA; opacity: 0.06; transparent: true; shader: flat"
                  animation="property: rotation; to: 90 360 0; loop: true; dur: 30000; easing: linear"></a-torus>
       </a-entity>
 
       <!-- Page title -->
-      <a-text id="page-title" rotation="16.192360248192195 0 0" value="SEJARAH VIRTUAL REALITY" font="kelsonsans" align="center"
-              position="0 4.90096 -5" color="#FFFFFF" scale="2.0 2.0 2.0" letterSpacing="2"
+      <a-text id="sjr-page-title" rotation="16.192360248192195 0 0" value="SEJARAH VIRTUAL REALITY" font="kelsonsans" align="center"
+              position="0 5.52135 -5" color="#FFFFFF" scale="2.0 2.0 2.0" letterSpacing="2"
               animation="property: position; to: 0 4.8 -5; dur: 3500; dir: alternate; loop: true; easing: easeInOutSine">
       </a-text>
-      <a-text id="page-subtitle" value="5 Momen yang Membentuk Dunia VR — Putar kepala untuk menelusuri" font="kelsonsans"
-              align="center" position="0 4.57243 -6.1098" color="#F59E0B" scale="0.78 0.78 0.78">
+      <a-text id="sjr-page-subtitle" value="5 Momen yang Membentuk Dunia VR — Putar kepala untuk menelusuri" font="kelsonsans"
+              align="center" position="0 5.01666 -6.1098" color="#F59E0B" scale="0.78 0.78 0.78">
       </a-text>
 
       <!-- ===================== CENTRAL TIMELINE ORB ===================== -->
       <!-- Decorative "time capsule" floating in front -->
-      <a-entity id="timeline-orb" position="-0.09696 3.59282 -5.47772">
+      <a-entity id="sjr-timeline-orb" position="-0.09696 4.26575 -5.47772">
         <!-- Core -->
-        <a-sphere id="orb-core" radius="0.18" color="#07040E"
+        <a-sphere id="sjr-orb-core" radius="0.18" color="#07040E"
                   material="shader: flat; transparent: true; opacity: 0.9"
                   animation="property: scale; from: 0.9 0.9 0.9; to: 1.1 1.1 1.1; dur: 2000; loop: true; dir: alternate; easing: easeInOutSine">
         </a-sphere>
-        <a-sphere id="orb-glow" radius="0.22" color="#F59E0B"
+        <a-sphere id="sjr-orb-glow" radius="0.22" color="#F59E0B"
                   material="shader: flat; transparent: true; opacity: 0.15"
                   animation="property: material.opacity; from: 0.05; to: 0.3; dur: 1500; loop: true; dir: alternate">
         </a-sphere>
         <!-- Spinning equator ring -->
-        <a-entity id="orb-ring-h" geometry="primitive: torus; radius: 0.28; radiusTubular: 0.012"
+        <a-entity id="sjr-orb-ring-h" geometry="primitive: torus; radius: 0.28; radiusTubular: 0.012"
                   material="color: #F59E0B; shader: flat; transparent: true; opacity: 0.7"
                   animation="property: rotation; to: 0 360 0; loop: true; dur: 5000; easing: linear">
         </a-entity>
         <!-- Tilted ring -->
-        <a-entity id="orb-ring-t" rotation="70 0 0"
+        <a-entity id="sjr-orb-ring-t" rotation="70 0 0"
                   geometry="primitive: torus; radius: 0.28; radiusTubular: 0.009"
                   material="color: #A78BFA; shader: flat; transparent: true; opacity: 0.5"
                   animation="property: rotation; to: 430 0 0; loop: true; dur: 7000; easing: linear">
         </a-entity>
         <!-- Orbiting dot (represents timeline node) -->
-        <a-entity id="orb-dot-wrap"
+        <a-entity id="sjr-orb-dot-wrap"
                   animation="property: rotation; to: 0 360 0; loop: true; dur: 4000; easing: linear">
-          <a-sphere id="orb-dot" position="0.36 0 0" radius="0.04" color="#F59E0B" material="shader: flat"></a-sphere>
+          <a-sphere id="sjr-orb-dot" position="0.36 0 0" radius="0.04" color="#F59E0B" material="shader: flat"></a-sphere>
         </a-entity>
       </a-entity>
 
       <!-- ===================== PANEL 1: 1960 Sensorama (Far Left) ===================== -->
       <!-- Accent: #F59E0B amber -->
-      <a-entity id="panel1-wrapper" position="-7.41244 2.2 -2.1735" rotation="0 55 0"
+      <a-entity id="sjr-panel1-wrapper" position="-7.41244 2.75591 -2.1735" rotation="0 55 0"
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 550; easing: easeOutBack">
-        <a-plane id="panel1-bg" scale="1.17016 1 1" width="3.0" height="2.0" color="#0A0608"
+        <a-plane id="sjr-panel1-bg" scale="1.17016 1 1" width="3.0" height="2.0" color="#0A0608"
                  material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
-        <a-plane id="panel1-border" scale="1.1696 1 1" width="3.04" height="2.04" color="#F59E0B" position="0 0 -0.008"
+        <a-plane id="sjr-panel1-border" scale="1.1696 1 1" width="3.04" height="2.04" color="#F59E0B" position="0 0 -0.008"
                  material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
 
         <!-- Year badge -->
-        <a-text id="panel1-year" value="1960" font="kelsonsans" align="left"
+        <a-text id="sjr-panel1-year" value="1960" font="kelsonsans" align="left"
                 position="-1.69282 0.70257 0.02" color="#F59E0B" scale="2.6 2.6 2.6" opacity="0.2"></a-text>
         <!-- Name -->
-        <a-text id="panel1-name" value="Sensorama" font="kelsonsans" align="left"
+        <a-text id="sjr-panel1-name" value="Sensorama" font="kelsonsans" align="left"
                 position="-0.26358 0.73113 0.02" color="#FFFFFF" scale="1.45 1.45 1.45"></a-text>
         <!-- Divider -->
-        <a-box id="panel1-divider" scale="1.26045 1 1" position="0 0.33269 0.02" width="2.7" height="0.006" depth="0.001"
+        <a-box id="sjr-panel1-divider" scale="1.26045 1 1" position="0 0.33269 0.02" width="2.7" height="0.006" depth="0.001"
                color="#F59E0B" material="shader: flat; opacity: 0.5"></a-box>
         <!-- Inventor tag -->
-        <a-text id="panel1-inventor" value="Morton Heilig" font="kelsonsans" align="left"
+        <a-text id="sjr-panel1-inventor" value="Morton Heilig" font="kelsonsans" align="left"
                 position="-0.58294 0.07326 0.02" color="#F59E0B" scale="0.65 0.65 0.65"></a-text>
         <!-- Description (short) -->
-        <a-text id="panel1-desc"
+        <a-text id="sjr-panel1-desc"
                 value="Mesin multisensori pertama — pengguna bisa melihat, mendengar, merasakan getaran, dan mencium bau secara bersamaan."
                 font="kelsonsans" align="left" position="-1.49247 -0.38567 0.02"
                 color="#CBD5E1" scale="0.68 0.68 0.68" width="4.6"></a-text>
         <!-- Reference photo (Sensorama) -->
-        <a-plane id="panel1-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
+        <a-plane id="sjr-panel1-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
                  color="#F59E0B" material="shader: flat; transparent: true; opacity: 0.55"></a-plane>
-        <a-image id="panel1-img" src="#img-sensorama" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
+        <a-image id="sjr-panel1-img" src="#sjr-img-sensorama" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
       </a-entity>
 
       <!-- ===================== PANEL 2: 1960 Telesphere Mask (Left) ===================== -->
       <!-- Accent: #34D399 emerald -->
-      <a-entity id="panel2-wrapper" position="-4.38162 2.2 -4.70548" rotation="0 25 0"
+      <a-entity id="sjr-panel2-wrapper" position="-4.38162 2.75592 -4.70548" rotation="0 25 0"
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 650; easing: easeOutBack">
-        <a-plane id="panel2-bg" scale="1.27735 1 1" width="3.0" height="2.0" color="#050A08"
+        <a-plane id="sjr-panel2-bg" scale="1.27735 1 1" width="3.0" height="2.0" color="#050A08"
                  material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
-        <a-plane id="panel2-border" scale="1.27821 1 1" width="3.04" height="2.04" color="#34D399" position="0 0 -0.008"
+        <a-plane id="sjr-panel2-border" scale="1.27821 1 1" width="3.04" height="2.04" color="#34D399" position="0 0 -0.008"
                  material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
 
-        <a-text id="panel2-year" value="1960" font="kelsonsans" align="left"
+        <a-text id="sjr-panel2-year" value="1960" font="kelsonsans" align="left"
                 position="-1.878 0.71275 0.02" color="#34D399" scale="2.6 2.6 2.6" opacity="0.2"></a-text>
-        <a-text id="panel2-name" value="Telesphere Mask" font="kelsonsans" align="left"
+        <a-text id="sjr-panel2-name" value="Telesphere Mask" font="kelsonsans" align="left"
                 position="-0.48656 0.72218 0.02" color="#FFFFFF" scale="1.3 1.3 1.3"></a-text>
-        <a-box id="panel2-divider" scale="1.38512 1 1" position="0 0.37122 0.02" width="2.7" height="0.006" depth="0.001"
+        <a-box id="sjr-panel2-divider" scale="1.38512 1 1" position="0 0.37122 0.02" width="2.7" height="0.006" depth="0.001"
                color="#34D399" material="shader: flat; opacity: 0.5"></a-box>
-        <a-text id="panel2-inventor" value="Morton Heilig (juga)" font="kelsonsans" align="left"
+        <a-text id="sjr-panel2-inventor" value="Morton Heilig (juga)" font="kelsonsans" align="left"
                 position="-0.64329 0.1082 0.02" color="#34D399" scale="0.65 0.65 0.65"></a-text>
-        <a-text id="panel2-desc"
+        <a-text id="sjr-panel2-desc"
                 value="HMD pertama dalam sejarah. Berbentuk kacamata besar untuk film 3D, namun belum bisa merespons gerakan kepala pengguna."
                 font="kelsonsans" align="left" position="-1.41005 -0.3918 0.02"
                 color="#CBD5E1" scale="0.68 0.68 0.68" width="4.6"></a-text>
         <!-- Reference photo (Telesphere Mask) -->
-        <a-plane id="panel2-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
+        <a-plane id="sjr-panel2-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
                  color="#34D399" material="shader: flat; transparent: true; opacity: 0.55"></a-plane>
-        <a-image id="panel2-img" src="#img-telesphere" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
+        <a-image id="sjr-panel2-img" src="#sjr-img-telesphere" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
       </a-entity>
 
       <!-- ===================== PANEL 3: 1968 Sword of Damocles (Center) ===================== -->
       <!-- Accent: #EF4444 red (bold milestone) -->
-      <a-entity id="panel3-wrapper" position="-0.25102 2.2 -5.6599" rotation="0 0 0"
+      <a-entity id="sjr-panel3-wrapper" position="-0.25102 2.74728 -5.6599" rotation="0 0 0"
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 750; easing: easeOutBack">
-        <a-plane id="panel3-bg" scale="1.39002 1 1" width="3.0" height="2.0" color="#0A0505"
+        <a-plane id="sjr-panel3-bg" scale="1.39002 1 1" width="3.0" height="2.0" color="#0A0505"
                  material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
-        <a-plane id="panel3-border" scale="1.39046 1 1" width="3.04" height="2.04" color="#EF4444" position="0 0 -0.008"
+        <a-plane id="sjr-panel3-border" scale="1.39046 1 1" width="3.04" height="2.04" color="#EF4444" position="0 0 -0.008"
                  material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
 
-        <a-text id="panel3-year" value="1968" font="kelsonsans" align="left"
+        <a-text id="sjr-panel3-year" value="1968" font="kelsonsans" align="left"
                 position="-1.98868 0.71193 0.02" color="#EF4444" scale="2.6 2.6 2.6" opacity="0.2"></a-text>
-        <a-text id="panel3-name" value="Sword of Damocles" font="kelsonsans" align="left"
+        <a-text id="sjr-panel3-name" value="Sword of Damocles" font="kelsonsans" align="left"
                 position="-0.54961 0.71425 0.02" color="#FFFFFF" scale="1.2 1.2 1.2"></a-text>
-        <a-box id="panel3-divider" scale="1.46777 1 1" position="0 0.379 0.02" width="2.7" height="0.006" depth="0.001"
+        <a-box id="sjr-panel3-divider" scale="1.46777 1 1" position="0 0.379 0.02" width="2.7" height="0.006" depth="0.001"
                color="#EF4444" material="shader: flat; opacity: 0.5"></a-box>
-        <a-text id="panel3-inventor" value="Ivan Sutherland" font="kelsonsans" align="left"
+        <a-text id="sjr-panel3-inventor" value="Ivan Sutherland" font="kelsonsans" align="left"
                 position="-0.59106 0.09999 0.02" color="#EF4444" scale="0.65 0.65 0.65"></a-text>
-        <a-text id="panel3-desc"
+        <a-text id="sjr-panel3-desc"
                 value="HMD pertama yang terhubung ke komputer. Terlalu berat hingga harus digantung di langit-langit dengan lengan mekanis."
                 font="kelsonsans" align="left" position="-1.35 -0.37853 0.02"
                 color="#CBD5E1" scale="0.68 0.68 0.68" width="4.6"></a-text>
         <!-- Reference photo (Sword of Damocles) -->
-        <a-plane id="panel3-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
+        <a-plane id="sjr-panel3-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
                  color="#EF4444" material="shader: flat; transparent: true; opacity: 0.55"></a-plane>
-        <a-image id="panel3-img" src="#img-damocles" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
+        <a-image id="sjr-panel3-img" src="#sjr-img-damocles" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
       </a-entity>
 
       <!-- ===================== PANEL 4: 1993 Sega VR (Right) ===================== -->
       <!-- Accent: #A78BFA purple -->
-      <a-entity id="panel4-wrapper" position="3.91004 2.2 -4.91151" rotation="0 -25 0"
+      <a-entity id="sjr-panel4-wrapper" position="3.91004 2.74407 -4.91151" rotation="0 -25 0"
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 850; easing: easeOutBack">
-        <a-plane id="panel4-bg" scale="1.25537 1 1.31257" position="0 0 0.00077" width="3.0" height="2.0" color="#07050A"
+        <a-plane id="sjr-panel4-bg" scale="1.25537 1 1.31257" position="0 0 0.00077" width="3.0" height="2.0" color="#07050A"
                  material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
-        <a-plane id="panel4-border" scale="1.25616 1 1" width="3.04" height="2.04" color="#A78BFA" position="0 0 -0.008"
+        <a-plane id="sjr-panel4-border" scale="1.25616 1 1" width="3.04" height="2.04" color="#A78BFA" position="0 0 -0.008"
                  material="shader: flat; transparent: true; opacity: 0.65"></a-plane>
 
-        <a-text id="panel4-year" value="1993" font="kelsonsans" align="left"
+        <a-text id="sjr-panel4-year" value="1993" font="kelsonsans" align="left"
                 position="-1.8155 0.70153 0.02" color="#A78BFA" scale="2.6 2.6 2.6" opacity="0.2"></a-text>
-        <a-text id="panel4-name" value="Sega VR" font="kelsonsans" align="left"
+        <a-text id="sjr-panel4-name" value="Sega VR" font="kelsonsans" align="left"
                 position="-0.07581 0.67959 0.02" color="#FFFFFF" scale="1.45 1.45 1.45"></a-text>
-        <a-box id="panel4-divider" scale="1.32265 1 1" position="0 0.31863 0.02" width="2.7" height="0.006" depth="0.001"
+        <a-box id="sjr-panel4-divider" scale="1.32265 1 1" position="0 0.31863 0.02" width="2.7" height="0.006" depth="0.001"
                color="#A78BFA" material="shader: flat; opacity: 0.5"></a-box>
-        <a-text id="panel4-inventor" value="Sega" font="kelsonsans" align="left"
+        <a-text id="sjr-panel4-inventor" value="Sega" font="kelsonsans" align="left"
                 position="-0.28473 0.09135 0.02" color="#A78BFA" scale="0.65 0.65 0.65"></a-text>
-        <a-text id="panel4-desc"
+        <a-text id="sjr-panel4-desc"
                 value="VR pertama untuk game rumahan. Gagal rilis secara massal karena masalah teknis yang menyebabkan pengguna mual."
                 font="kelsonsans" align="left" position="-1.49907 -0.39766 0.02"
                 color="#CBD5E1" scale="0.68 0.68 0.68" width="4.6"></a-text>
         <!-- Reference photo (Sega VR) -->
-        <a-plane id="panel4-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
+        <a-plane id="sjr-panel4-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
                  color="#A78BFA" material="shader: flat; transparent: true; opacity: 0.55"></a-plane>
-        <a-image id="panel4-img" src="#img-sega" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
+        <a-image id="sjr-panel4-img" src="#sjr-img-sega" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
       </a-entity>
 
       <!-- ===================== PANEL 5: Sekarang — Meta Quest (Far Right) ===================== -->
       <!-- Accent: #38BDF8 sky blue (modern/future) -->
-      <a-entity id="panel5-wrapper" position="7.07418 2.2 -2.25397" rotation="0 -55 0"
+      <a-entity id="sjr-panel5-wrapper" position="7.07418 2.77428 -2.25397" rotation="0 -55 0"
                 animation="property: scale; from: 0.8 0.8 0.8; to: 1 1 1; dur: 950; easing: easeOutBack">
-        <a-plane id="panel5-bg" scale="1.26973 1 1" width="3.0" height="2.0" color="#050A0E"
+        <a-plane id="sjr-panel5-bg" scale="1.26973 1 1" width="3.0" height="2.0" color="#050A0E"
                  material="transparent: true; opacity: 0.93; shader: flat"></a-plane>
-        <a-plane id="panel5-border" scale="1.26991 1 1" width="3.04" height="2.04" color="#38BDF8" position="0 0 -0.008"
+        <a-plane id="sjr-panel5-border" scale="1.26991 1 1" width="3.04" height="2.04" color="#38BDF8" position="0 0 -0.008"
                  material="shader: flat; transparent: true; opacity: 0.65"
                  animation="property: material.opacity; from: 0.4; to: 0.9; dur: 1000; loop: true; dir: alternate; easing: easeInOutSine">
         </a-plane>
 
-        <a-text id="panel5-year" value="Kini" font="kelsonsans" align="left"
+        <a-text id="sjr-panel5-year" value="Kini" font="kelsonsans" align="left"
                 position="-1.84366 0.70446 0.02" color="#38BDF8" scale="2.6 2.6 2.6" opacity="0.2"></a-text>
-        <a-text id="panel5-name" value="Meta Quest" font="kelsonsans" align="left"
+        <a-text id="sjr-panel5-name" value="Meta Quest" font="kelsonsans" align="left"
                 position="-0.32847 0.7163 0.02" color="#FFFFFF" scale="1.45 1.45 1.45"></a-text>
-        <a-box id="panel5-divider" scale="1.37615 1 1" position="0 0.3321 0.02" width="2.7" height="0.006" depth="0.001"
+        <a-box id="sjr-panel5-divider" scale="1.37615 1 1" position="0 0.3321 0.02" width="2.7" height="0.006" depth="0.001"
                color="#38BDF8" material="shader: flat; opacity: 0.5"></a-box>
-        <a-text id="panel5-inventor" value="Meta (Standalone Era)" font="kelsonsans" align="left"
+        <a-text id="sjr-panel5-inventor" value="Meta (Standalone Era)" font="kelsonsans" align="left"
                 position="-0.80422 0.0609 0.02" color="#38BDF8" scale="0.65 0.65 0.65"></a-text>
-        <a-text id="panel5-desc"
+        <a-text id="sjr-panel5-desc"
                 value="Era standalone. Semua sensor dan layar dalam satu headset — tanpa kabel, tanpa PC besar. VR kini praktis dan terjangkau."
                 font="kelsonsans" align="left" position="-1.35 -0.4575 0.02"
                 color="#CBD5E1" scale="0.68 0.68 0.68" width="4.6"></a-text>
         <!-- Reference photo (Meta Quest) -->
-        <a-plane id="panel5-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
+        <a-plane id="sjr-panel5-img-border" position="0 -1.42 -0.006" width="2.54" height="1.34"
                  color="#38BDF8" material="shader: flat; transparent: true; opacity: 0.55"></a-plane>
-        <a-image id="panel5-img" src="#img-metaquest" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
+        <a-image id="sjr-panel5-img" src="#sjr-img-metaquest" position="0 -1.42 0.01" width="2.5" height="1.3"></a-image>
       </a-entity>
 
       <!-- ===================== BACK BUTTON ===================== -->
-      <a-entity id="btn-back" position="-3 0.72442 -3.05423" class="clickable" close-tab
+      <a-entity id="sjr-btn-back" position="-0.09459 0.34207 -4.66958" class="clickable" close-tab
                 geometry="primitive: plane; width: 1.8; height: 0.45"
                 material="transparent: true; opacity: 0"
                 animation__mouseenter="property: scale; to: 1.05 1.05 1.05; startEvents: mouseenter; dur: 200"
                 animation__mouseleave="property: scale; to: 1 1 1; startEvents: mouseleave; dur: 200">
-        <a-plane id="btn-back-bg" width="1.8" height="0.45" color="#0A0608"
+        <a-plane id="sjr-btn-back-bg" width="1.8" height="0.45" color="#0A0608"
                  material="transparent: true; opacity: 0.88; shader: flat" position="0 0 -0.001"></a-plane>
-        <a-plane id="btn-back-border" width="1.82" height="0.47" color="#F59E0B"
+        <a-plane id="sjr-btn-back-border" width="1.82" height="0.47" color="#F59E0B"
                  position="0 0 -0.005" material="shader: flat; transparent: true; opacity: 0.7"></a-plane>
-        <a-text id="btn-back-text" value="KEMBALI" color="#F59E0B" scale="0.65 0.65 0.65"
+        <a-text id="sjr-btn-back-text" value="KEMBALI" color="#F59E0B" scale="0.65 0.65 0.65"
                 align="center" position="0 0 0.02" font="kelsonsans"></a-text>
       </a-entity>
 
