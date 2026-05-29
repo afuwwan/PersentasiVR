@@ -17,11 +17,11 @@
       init: function () {
         var sceneEl = this.el;
         var isLow = window.isLowEndDevice;
-        var maxRatio = isLow ? 1.0 : 1.35;
+        var maxRatio = isLow ? 1.5 : 2.0; // Bumped graphics ratio on mobile
         
         sceneEl.setAttribute('renderer', {
-          antialias: !isLow,
-          precision: isLow ? 'medium' : 'high',
+          antialias: true, // Keep antialiasing enabled for smooth edges
+          precision: 'medium',
           powerPreference: 'high-performance',
           logarithmicDepthBuffer: false
         });
@@ -180,7 +180,7 @@
     AFRAME.registerComponent('fireflies', {
       init: function () {
         var isLow = window.isLowEndDevice;
-        var count = isLow ? 20 : 75;
+        var count = isLow ? 40 : 75; // More fireflies on mobile
         for (var i = 0; i < count; i++) {
           var fly = document.createElement('a-sphere');
           fly.setAttribute('id', 'firefly-' + i);
@@ -205,7 +205,7 @@
     AFRAME.registerComponent('park-trees', {
       init: function () {
         var isLow = window.isLowEndDevice;
-        var count = isLow ? 40 : 150;
+        var count = isLow ? 80 : 150; // More trees on mobile
         for (var i = 0; i < count; i++) {
           var x = (Math.random() - 0.5) * 100;
           var z = (Math.random() - 0.5) * 100;

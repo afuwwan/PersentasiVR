@@ -17,11 +17,11 @@
         init: function () {
           var sceneEl = this.el;
           var isLow = window.isLowEndDevice;
-          var maxRatio = isLow ? 1.0 : 1.35;
+          var maxRatio = isLow ? 1.5 : 2.0; // Bumped graphics ratio on mobile
           
           sceneEl.setAttribute('renderer', {
-            antialias: !isLow,
-            precision: isLow ? 'medium' : 'high',
+            antialias: true, // Keep antialiasing enabled for smooth edges
+            precision: 'medium',
             powerPreference: 'high-performance',
             logarithmicDepthBuffer: false
           });
@@ -77,7 +77,7 @@
         init: function () {
           var isLow = window.isLowEndDevice;
           const positions = isLow ? [
-            "-3 1.5 -6", "4 2 -8", "2 1 -5", "-4 2 -7"
+            "-3 1.5 -6", "4 2 -8", "2 1 -5", "-4 2 -7", "-2 4 -9", "5 1.5 -6"
           ] : [
             "-3 1.5 -6", "4 2 -8", "-5 3 -11", "2 1 -5",
             "-2 4 -9", "5 1.5 -6", "-4 2 -7", "3 3 -10"

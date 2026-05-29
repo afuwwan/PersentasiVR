@@ -19,11 +19,11 @@
         init: function () {
           var sceneEl = this.el;
           var isLow = window.isLowEndDevice;
-          var maxRatio = isLow ? 1.0 : 1.35;
+          var maxRatio = isLow ? 1.5 : 2.0; // Bumped graphics ratio on mobile
           
           sceneEl.setAttribute('renderer', {
-            antialias: !isLow,
-            precision: isLow ? 'medium' : 'high',
+            antialias: true, // Keep antialiasing enabled for smooth edges
+            precision: 'medium',
             powerPreference: 'high-performance',
             logarithmicDepthBuffer: false
           });
@@ -41,7 +41,7 @@
       AFRAME.registerComponent('wireframe-hills', {
         init: function () {
           var isLow = window.isLowEndDevice;
-          var segments = isLow ? 40 : 100;
+          var segments = isLow ? 60 : 100; // Smoother geometry on mobile
           // Larger, more visible wireframe hills
           var geometry = new THREE.PlaneGeometry(200, 200, segments, segments);
           var position = geometry.attributes.position;
@@ -79,7 +79,7 @@
       AFRAME.registerComponent('floating-particles', {
         init: function () {
           var isLow = window.isLowEndDevice;
-          var count = isLow ? 5 : 15;
+          var count = isLow ? 10 : 15; // More particles on mobile
           for (let i = 0; i < count; i++) {
             let sphere = document.createElement('a-sphere');
             sphere.setAttribute('id', 'idx-lobby-particle-' + i);
