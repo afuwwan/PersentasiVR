@@ -16,11 +16,11 @@
         init: function () {
           var sceneEl = this.el;
           var isLow = window.isLowEndDevice;
-          var maxRatio = isLow ? 1.5 : 2.0; // Bumped graphics ratio on mobile
+          var maxRatio = isLow ? 2.0 : window.devicePixelRatio; // Capped at 2.0 on mobile for high-definition sharpness
           
           sceneEl.setAttribute('renderer', {
             antialias: true, // Keep antialiasing enabled for smooth edges
-            precision: 'medium',
+            precision: 'high', // High shader precision
             powerPreference: 'high-performance',
             logarithmicDepthBuffer: false
           });
@@ -49,7 +49,7 @@
       AFRAME.registerComponent('floating-particles', {
         init: function () {
           var isLow = window.isLowEndDevice;
-          var count = isLow ? 10 : 18; // More particles on mobile
+          var count = isLow ? 14 : 18; // More particles on mobile for fuller environment
           const colors = ['#38BDF8', '#34D399', '#FBBF24', '#F472B6', '#A78BFA'];
           for (let i = 0; i < count; i++) {
             let s = document.createElement('a-sphere');

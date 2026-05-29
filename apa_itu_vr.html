@@ -17,11 +17,11 @@
         init: function () {
           var sceneEl = this.el;
           var isLow = window.isLowEndDevice;
-          var maxRatio = isLow ? 1.5 : 2.0; // Bumped graphics ratio on mobile
+          var maxRatio = isLow ? 2.0 : window.devicePixelRatio; // Capped at 2.0 on mobile for high-definition sharpness
           
           sceneEl.setAttribute('renderer', {
             antialias: true, // Keep antialiasing enabled for smooth edges
-            precision: 'medium',
+            precision: 'high', // High shader precision
             powerPreference: 'high-performance',
             logarithmicDepthBuffer: false
           });
@@ -75,10 +75,7 @@
 
       AFRAME.registerComponent('floating-particles', {
         init: function () {
-          var isLow = window.isLowEndDevice;
-          const positions = isLow ? [
-            "-3 1.5 -6", "4 2 -8", "2 1 -5", "-4 2 -7", "-2 4 -9", "5 1.5 -6"
-          ] : [
+          const positions = [
             "-3 1.5 -6", "4 2 -8", "-5 3 -11", "2 1 -5",
             "-2 4 -9", "5 1.5 -6", "-4 2 -7", "3 3 -10"
           ];
